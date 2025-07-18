@@ -28,9 +28,11 @@ export default function QuestionWithAnswersCard({
 }: QuestionWithAnswersCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const questionSlug = encodeURIComponent(question.id);
-  
+
   // Parse metadata to get alternative question forms
-  const questionForms = question.metadata?.question_forms || [question.question];
+  const questionForms = question.metadata?.question_forms || [
+    question.question,
+  ];
   const alternativeQuestions = questionForms.slice(1); // Get all except the first one
 
   return (
@@ -49,22 +51,31 @@ export default function QuestionWithAnswersCard({
         {alternativeQuestions.length > 0 && (
           <div className="mb-3">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-gray-500 font-medium">Also asked as:</span>
+              <span className="text-xs text-gray-500 font-medium">
+                Also asked as:
+              </span>
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="text-xs underline text-palestine-green hover:text-gray-700 transition-colors"
               >
-                {isExpanded ? 'Show less' : `Show ${alternativeQuestions.length} more`}
+                {isExpanded
+                  ? "Show less"
+                  : `Show ${alternativeQuestions.length} more`}
               </button>
             </div>
-            
+
             {isExpanded && (
               <div className="space-y-1">
-                {alternativeQuestions.map((altQuestion: string, index: number) => (
-                  <div key={index} className="text-sm text-gray-600 italic pl-2 border-l-2 border-gray-200">
-                    "{altQuestion}"
-                  </div>
-                ))}
+                {alternativeQuestions.map(
+                  (altQuestion: string, index: number) => (
+                    <div
+                      key={index}
+                      className="text-sm text-gray-600 italic pl-2 border-l-2 border-gray-200"
+                    >
+                      "{altQuestion}"
+                    </div>
+                  ),
+                )}
               </div>
             )}
           </div>
@@ -145,8 +156,6 @@ export default function QuestionWithAnswersCard({
               />
             </svg>
           </Link>
-
-      
         </div>
       </div>
     </div>

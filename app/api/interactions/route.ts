@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     if (!question) {
       return NextResponse.json(
         { error: "Question is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -25,14 +25,14 @@ export async function POST(request: NextRequest) {
       if (type === "report" && (!feedback || feedback.trim().length < 5)) {
         return NextResponse.json(
           { error: "Report feedback too short" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
       if (type === "report" && feedback.trim().length > 2000) {
         return NextResponse.json(
           { error: "Report feedback too long" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       ) {
         return NextResponse.json(
           { error: "Suggested answer too short" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       throw new Error(
-        `External service responded with status: ${response.status}`
+        `External service responded with status: ${response.status}`,
       );
     }
 
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     // Don't expose internal error details to client
     return NextResponse.json(
       { error: "Failed to record interaction" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

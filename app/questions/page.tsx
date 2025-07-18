@@ -101,7 +101,7 @@ function UnansweredQuestionCard({
                         >
                           "{altQuestion}"
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 )}
@@ -137,7 +137,7 @@ export default function QuestionsPage() {
   const loadAnsweredQuestions = async (page: number) => {
     try {
       const response = await fetch(
-        `/api/questions/answered?page=${page}&limit=12`
+        `/api/questions/answered?page=${page}&limit=12`,
       );
       const data = await response.json();
       setAnsweredQuestions(data);
@@ -149,7 +149,7 @@ export default function QuestionsPage() {
   const loadUnansweredQuestions = async (page: number) => {
     try {
       const response = await fetch(
-        `/api/questions/unanswered?page=${page}&limit=12`
+        `/api/questions/unanswered?page=${page}&limit=12`,
       );
       const data = await response.json();
       setUnansweredQuestions(data);

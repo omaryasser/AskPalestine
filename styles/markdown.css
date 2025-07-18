@@ -24,12 +24,14 @@
   color: #7c3aed;
 }
 
-.markdown-content strong, .markdown-content b {
+.markdown-content strong,
+.markdown-content b {
   font-weight: 700;
   color: #111827;
 }
 
-.markdown-content em, .markdown-content i {
+.markdown-content em,
+.markdown-content i {
   font-style: italic;
 }
 
@@ -124,7 +126,7 @@
   color: #1f2937;
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.875rem;
 }
 

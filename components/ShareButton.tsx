@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface ShareButtonProps {
   url?: string;
@@ -7,7 +7,12 @@ interface ShareButtonProps {
   children: React.ReactNode;
 }
 
-export default function ShareButton({ url, text = 'Link copied to clipboard!', className = '', children }: ShareButtonProps) {
+export default function ShareButton({
+  url,
+  text = "Link copied to clipboard!",
+  className = "",
+  children,
+}: ShareButtonProps) {
   const handleShare = () => {
     const shareUrl = url || window.location.href;
     navigator.clipboard.writeText(shareUrl);

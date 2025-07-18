@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
+import { useState } from "react";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 
 interface Question {
   id: string;
@@ -22,13 +22,18 @@ interface QuestionCardProps {
   showPreview?: boolean;
 }
 
-export default function QuestionCard({ question, showPreview = false }: QuestionCardProps) {
+export default function QuestionCard({
+  question,
+  showPreview = false,
+}: QuestionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   const questionSlug = encodeURIComponent(question.id);
-  
+
   // Parse metadata to get alternative question forms
-  const questionForms = question.metadata?.question_forms || [question.question];
+  const questionForms = question.metadata?.question_forms || [
+    question.question,
+  ];
   const alternativeQuestions = questionForms.slice(1); // Get all except the first one
 
   return (
@@ -39,46 +44,57 @@ export default function QuestionCard({ question, showPreview = false }: Question
             {question.question}
           </h3>
         </Link>
-        
+
         {/* Alternative question forms */}
         {alternativeQuestions.length > 0 && (
           <div className="mb-3">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-gray-500 font-medium">Also asked as:</span>
+              <span className="text-xs text-gray-500 font-medium">
+                Also asked as:
+              </span>
               <button
-              onClick={() => setIsExpanded(!isExpanded)}
+                onClick={() => setIsExpanded(!isExpanded)}
                 className="text-xs underline text-palestine-green hover:text-gray-700 transition-colors"
               >
-                {isExpanded ? 'Show less' : `Show ${alternativeQuestions.length} more`}
+                {isExpanded
+                  ? "Show less"
+                  : `Show ${alternativeQuestions.length} more`}
               </button>
             </div>
-            
+
             {isExpanded && (
               <div className="space-y-1">
-                {alternativeQuestions.map((altQuestion: string, index: number) => (
-                  <div key={index} className="text-sm text-gray-600 italic pl-2 border-l-2 border-gray-200">
-                    "{altQuestion}"
-                  </div>
-                ))}
+                {alternativeQuestions.map(
+                  (altQuestion: string, index: number) => (
+                    <div
+                      key={index}
+                      className="text-sm text-gray-600 italic pl-2 border-l-2 border-gray-200"
+                    >
+                      "{altQuestion}"
+                    </div>
+                  ),
+                )}
               </div>
             )}
           </div>
         )}
-        
+
         {/* Answer count and authors - only show if data is available */}
-        {question.answerCount && question.authors && question.authors.length > 0 && (
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="text-sm text-gray-600">
-                <span className="font-medium text-palestine-green">
-                  {question.answerCount}
-                </span>
-                {question.answerCount === 1 ? " answer" : " answers"}
+        {question.answerCount &&
+          question.authors &&
+          question.authors.length > 0 && (
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <div className="text-sm text-gray-600">
+                  <span className="font-medium text-palestine-green">
+                    {question.answerCount}
+                  </span>
+                  {question.answerCount === 1 ? " answer" : " answers"}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        
+          )}
+
         <div className="flex-col items-center justify-between mt-auto">
           {/* Author photos - only show if data is available */}
           {question.authors && question.authors.length > 0 && (
@@ -123,19 +139,27 @@ export default function QuestionCard({ question, showPreview = false }: Question
               </div>
             </div>
           )}
-          
+
           <div className="flex items-center justify-between mt-auto">
-            <Link 
+            <Link
               href={`/questions/${questionSlug}`}
               className="inline-flex items-center text-palestine-green hover:text-gray-700 font-medium transition-colors"
             >
-              {question.answerCount ? 'Read Answers' : 'View Question'}
-              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              {question.answerCount ? "Read Answers" : "View Question"}
+              <svg
+                className="ml-2 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </Link>
-            
-
           </div>
         </div>
       </div>

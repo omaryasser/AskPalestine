@@ -15,11 +15,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AskPalestine - Truth through Knowledge",
-  description: "An index of Palestine-related questions and answers by prominent pro-Palestinian figures. Get clarity and confidence to speak up for Palestinian rights.",
-  keywords: "Palestine, Israel, Gaza, West Bank, Palestinian rights, Middle East, pro-Palestinian",
+  description:
+    "An index of Palestine-related questions and answers by prominent pro-Palestinian figures. Get clarity and confidence to speak up for Palestinian rights.",
+  keywords:
+    "Palestine, Israel, Gaza, West Bank, Palestinian rights, Middle East, pro-Palestinian",
   openGraph: {
     title: "AskPalestine - Truth through Knowledge",
-    description: "An index of Palestine-related questions and answers by prominent pro-Palestinian figures.",
+    description:
+      "An index of Palestine-related questions and answers by prominent pro-Palestinian figures.",
     url: "https://askpalestine.com",
     siteName: "AskPalestine",
     images: [
@@ -35,7 +38,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AskPalestine - Truth through Knowledge",
-    description: "An index of Palestine-related questions and answers by prominent pro-Palestinian figures.",
+    description:
+      "An index of Palestine-related questions and answers by prominent pro-Palestinian figures.",
     images: ["/favicon.png"],
     creator: "@askpalestine_qa",
   },
@@ -55,11 +59,9 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-        style={{ backgroundColor: '#dfd5ca' }}
+        style={{ backgroundColor: "#dfd5ca" }}
       >
-        <main className="flex-1">
-          {children}
-        </main>
+        <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>

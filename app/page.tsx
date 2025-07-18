@@ -32,7 +32,7 @@ async function getHomePageData() {
 
   // Get all voices for the sliding row
   const allProPalestiniansStmt = db.prepare(
-    "SELECT * FROM voices ORDER BY name"
+    "SELECT * FROM voices ORDER BY name",
   );
   const allProPalestinians = allProPalestiniansStmt.all() as ProPalestinian[];
 
@@ -130,7 +130,9 @@ export default async function Home() {
                       )}
                       {person.bio && (
                         <div className="text-xs text-gray-400 mt-2 line-clamp-2">
-                          {person.bio.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').substring(0, 100) + "..."}
+                          {person.bio
+                            .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+                            .substring(0, 100) + "..."}
                         </div>
                       )}
                     </div>
