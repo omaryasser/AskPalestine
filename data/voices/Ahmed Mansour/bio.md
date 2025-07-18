@@ -1,0 +1,1 @@
+[Ahmed Mansour](https://ahmedmansour.com) is an Egyptian broadcaster, journalist, and producer who works on the Al Jazeera satellite channel. He is a former editor-in-chief of the Kuwaiti society magazine. He holds Egyptian and British citizenship.

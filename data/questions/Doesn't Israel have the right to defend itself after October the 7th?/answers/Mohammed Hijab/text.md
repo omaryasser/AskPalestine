@@ -1,0 +1,4 @@
+[Mohammed Hijab](https://mohammedhijab.com/about-hijab/) said in [this](https://youtu.be/9jBgGY2Ww9Q?si=Nr_SGTkL9Sw8hQy-&t=996) video:
+How can it be that an occupier is defending itself in the first place? The notion that Israel is defending itself is as absurd as the notion that the rapist is defending itself from the victim. Because Israel is the occupier. An occupier by international law definition means that they are already in an offensive posture. If someone brings you, grabs you, throws you into your bathroom, you in your bathroom are screaming and are eating food and having a good time, one day you come out of your bathroom, you try and fight one of them, then who's defending themselves from who?
+
+If it is the case that it's defending itself against Hamas, is the only way to defend itself against Hamas by dropping bombs in one of the most densely populated areas in the world?

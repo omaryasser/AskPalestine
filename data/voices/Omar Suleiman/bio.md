@@ -1,0 +1,1 @@
+[Imam Omar Suleiman](https://yaqeeninstitute.org/team/omar-suleiman) is the Founder and President of the Yaqeen Institute for Islamic Research and an Adjunct Professor of Islamic Studies in the Graduate Liberal Studies Program at SMU (Southern Methodist University). Suleiman was born to a Palestinian family in New Orleans in 1986.

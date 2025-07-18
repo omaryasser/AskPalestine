@@ -1,0 +1,3 @@
+[Husam Zomlot](https://en.wikipedia.org/wiki/Husam_Zomlot) said in [this](https://youtu.be/GvDAra1VFnE?si=uQFKqUorM5O2zXjm&t=159) video:
+
+This very same Hospital, the Baptist Ahly Hospital of Gaza was bombarded only two days before last night by the Israeli air strike and they recognize that. This very same hospital was designated by Israel as a place to be evacuated. This very same hospital the director of it was called by the Israeli occupation authorities asking him to evacuate all patients on mass. I believe the archbishop of Jerusalem when he condemns the Israeli air strike. I don't believe the Israeli mouthpieces and spokespeople, they lie more than they breathe and the record is very clear.

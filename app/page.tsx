@@ -1,103 +1,215 @@
-import Image from "next/image";
+import QuestionCard from "../components/QuestionCard";
+import QuestionWithAnswersCard from "../components/QuestionWithAnswersCard";
+import ProPalestinianCard from "../components/ProPalestinianCard";
+import PalestineButton from "../components/PalestineButton";
+import SearchForm from "../components/SearchForm";
+import {
+  PageHeader,
+  PalestineFlagStats,
+  SectionHeader,
+} from "../components/PalestineDesign";
+import {
+  initDatabase,
+  Question,
+  ProPalestinian,
+  getTotalCounts,
+  getQuestionsWithMostAnswers,
+  getUnansweredQuestions,
+} from "../lib/database";
+import Link from "next/link";
 
-export default function Home() {
+async function getHomePageData() {
+  const db = initDatabase();
+
+  // Get actual counts from database
+  const counts = getTotalCounts();
+
+  // Get questions with most answers instead of random
+  const questionsWithAnswers = getQuestionsWithMostAnswers(6);
+
+  // Get unanswered questions
+  const unansweredQuestions = getUnansweredQuestions(6);
+
+  // Get all voices for the sliding row
+  const allProPalestiniansStmt = db.prepare(
+    "SELECT * FROM voices ORDER BY name"
+  );
+  const allProPalestinians = allProPalestiniansStmt.all() as ProPalestinian[];
+
+  return {
+    counts,
+    questionsWithAnswers,
+    unansweredQuestions,
+    allProPalestinians,
+  };
+}
+
+export default async function Home() {
+  const {
+    counts,
+    questionsWithAnswers,
+    unansweredQuestions,
+    allProPalestinians,
+  } = await getHomePageData();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gray-50">
+      <PageHeader
+        title="AskPalestine"
+        subtitle="Truth through Palestinian Voices. Get clarity and confidence to speak up for Palestinian rights."
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Search Section */}
+        <div className="mb-12">
+          <SearchForm />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Stats Section */}
+        <div className="mb-16">
+          {/* Main Hero Stat */}
+          <div className="mb-8">
+            <PalestineFlagStats
+              count={counts.totalAnswers}
+              title="Total Answers"
+              subtitle="Expert responses from Palestinian voices worldwide"
+            />
+          </div>
+        </div>
+        {/* Palestinian Voices Section */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Palestinian Voices (${counts.totalProPalestinians})`}
+              subtitle="Expert perspectives from around the world"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/voices">View All →</PalestineButton>
+            </div>
+          </div>
+
+          {/* Clean Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {allProPalestinians.slice(0, 8).map((person, index) => (
+              <div key={person.id} className="group">
+                <div
+                  className="bg-white rounded-lg shadow-md hover:shadow-xl border-t-4 transition-all duration-300 overflow-hidden"
+                  style={{
+                    borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
+                  }}
+                >
+                  <Link href={`/voices/${encodeURIComponent(person.name)}`}>
+                    <div className="p-6 text-center">
+                      <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                        {person.photo ? (
+                          <img
+                            src={person.photo}
+                            alt={person.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full flex items-center justify-center text-white font-bold text-lg"
+                            style={{ backgroundColor: "#006234" }}
+                          >
+                            {person.name
+                              .split(" ")
+                              .map((n: string) => n[0])
+                              .join("")
+                              .slice(0, 2)}
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-sm font-medium text-gray-800 group-hover:text-green-600 transition-colors">
+                        {person.name}
+                      </p>
+                      {person.professional_identity && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          {person.professional_identity}
+                        </p>
+                      )}
+                      {person.bio && (
+                        <div className="text-xs text-gray-400 mt-2 line-clamp-2">
+                          {person.bio.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').substring(0, 100) + "..."}
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Questions with Most Answers */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Answered Questions (${counts.questionsWithAnswers})`}
+              subtitle="Questions with expert responses from Palestinian voices"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/questions">Browse All →</PalestineButton>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {questionsWithAnswers.map((question, index) => (
+              <div
+                key={question.id}
+                style={{
+                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
+                }}
+              >
+                <QuestionWithAnswersCard question={question} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Unanswered Questions */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Unanswered Questions (${unansweredQuestions.length})`}
+              subtitle="Help us find answers to these important questions"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/questions">
+                See All Questions →
+              </PalestineButton>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {unansweredQuestions.map((question, index) => (
+              <div
+                key={question.id}
+                className="border-t-4 h-full"
+                style={{
+                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
+                }}
+              >
+                <QuestionCard question={question} />
+              </div>
+            ))}
+          </div>
+
+          {unansweredQuestions.length === 0 && (
+            <div
+              className="bg-white rounded-lg shadow-md border-t-4 p-8 text-center"
+              style={{ borderTopColor: "#006234" }}
+            >
+              <div className="text-lg font-semibold text-gray-900 mb-2">
+                All questions have been answered!
+              </div>
+              <div className="text-gray-600">
+                Every question in our database has at least one expert response.
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

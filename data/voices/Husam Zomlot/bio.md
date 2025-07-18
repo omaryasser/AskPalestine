@@ -1,0 +1,1 @@
+[Husam Zomlot](https://en.wikipedia.org/wiki/Husam_Zomlot/) is a Palestinian diplomat, academic and economist. He was appointed Head of the Palestinian Mission to the United Kingdom in October 2018. Before his posting to the UK, he served as head of the PLO mission to the United States that was closed by President Donald Trump's administration.

@@ -1,0 +1,1 @@
+[Norman Finkelstein](https://en.wikipedia.org/wiki/Norman_Finkelstein) is an American political scientist and activist. His primary fields of research are the Israeli–Palestinian conflict and the politics of the Holocaust. He is a graduate of Binghamton University and received his Ph.D. in political science at Princeton University.

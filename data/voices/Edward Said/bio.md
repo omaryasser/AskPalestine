@@ -1,0 +1,1 @@
+[Professor Edward Said](https://en.wikipedia.org/wiki/Edward_Said) was a Palestinian-American academic, literary critic and political activist. As a public intellectual, Said was a member of the Palestinian National Council supporting a two-state solution that incorporated the Palestinian right of return, before resigning in 1993 due to his criticism of the Oslo Accords.

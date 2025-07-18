@@ -1,0 +1,1 @@
+[Middle East Monitor](https://en.wikipedia.org/wiki/Middle_East_Monitor) is a not-for-profit press monitoring organisation and lobbying group that emerged in mid 2009. MEMO is largely focused on the Israeli–Palestinian conflict, but writes about other issues in the Middle East as well.

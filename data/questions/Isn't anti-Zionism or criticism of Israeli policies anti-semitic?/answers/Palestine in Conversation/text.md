@@ -1,0 +1,19 @@
+**Can you be Jewish and anti-Zionist? (Is it antisemitic to be against Israel?)**
+
+**Short:** Yes! Many pro-Palestinian advocates are Jewish, such as those found in organisations like Jewish Voice for Peace which emphasise the importance of Jews condemning Israel. Antisemitism is discrimination against Jews and differs from anti-Zionism which is the rejection of a historical movement founded in 1897 which stated that Jews had exclusive rights to Indigenous Palestine, and called for their expulsion and extermination. Anti-Zionism is not antisemitic, and equating criticism of Israel with antisemitism contributes to a simplified understanding of what the word really means. This approach also reinforces harmful antisemitic cliches and dismisses nuanced discussions by treating any resemblance to these cliches as antisemitism. It’s especially harmful because it’s most often used to deflect criticism of Israel by shifting the focus to a hatred of Jews. The entire premise that it’s antisemitic to be against Israel is a massive part of Israeli government propaganda, and also insulting to a large majority of Jews who are in direct opposition to the actions of Israel and its existence full stop.
+
+**Long:** Yes! In fact, many of the most vocal pro-Palestinian advocates are Jewish, including many Rabbis and Orthodox Jews. As long as Zionism existed, there were Jews standing in opposition to it. From the Jewish Labor Bund to Albert Einstein, Hannah Arendt and Judith Butler. Also, organisations like Jewish Voice for Peace demonstrate on a daily basis not only the ability of Jews to stand behind Palestine and condemn Israel but the importance of Jews doing so. Antisemitism is a form of prejudice or discrimination directed toward Jews as individuals or as a group. Zionism actually emerged as a historical movement and a political ideology in 1897 under Theodor Herzl, not a religious one. It stated that Indigenous Palestine belongs solely to the Jewish people, and called for their eradication and displacement. Anti-Zionism is the rejection of a racist and colonial movement. Anti-Zionism is NOT the rejection of Jews, nor is it antisemitic.
+
+In fact, relating the idea that it could be considered un-Jewish or antisemitic to condemn Israel plays into the “tropeification” of antisemitism. Rather than thoughtfully considering whether something really invokes hatred of Jews or upholds systems that harm Jews, a ‘tropeified’ understanding of antisemitism compares questionable statements to a multitude of established cliches: blood libel, divided loyalty, world domination, etc. And so according to this logic, if a statement is similar to one of these cliches it’s antisemitic – regardless of the context or the truth. It essentially assumes that antisemitism is built-in to cliches, rather than expressed by them. 
+
+This mechanical understanding of antisemitism is most often used to neutralise criticism of Israel. In debates, it spurs Zionists to scan anti-Zionist arguments for cliches and then, by calling out ‘antisemitism’, shift the conversation from the other party's arguments to their ‘hatred of Jews.’ The entire premise that it’s antisemitic to be against Israel is a massive part of Israeli government propaganda, and also insulting to a large majority of Jews who are in direct opposition to the actions of Israel and its existence full stop.
+
+Sources:
+
+[@Em Cohen](https://vashtimedia.com/2021/03/24/formats/opinion/antisemitism-snl-israel-palestine-tropes-zionism-antizionism/comment-page-1/)
+
+[@claremontsjp](https://www.instagram.com/claremontsjp)
+
+[@jewishvoiceforpeace](https://www.instagram.com/jewishvoiceforpeace/)
+
+This answer is taken from the document [Palestine: in Conversation Document](https://docs.google.com/document/d/1OVKqgxQDOfFjy5h6KXgbKkHTFRPvRT79LFOcAao-imA/edit?pli=1&fbclid=IwAR31dX1VTjTiQRPBgdu-jeocUOhqXZcPCnsWFthV4VFLhjCya9_A22ZpQEs).

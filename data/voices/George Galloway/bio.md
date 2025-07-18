@@ -1,0 +1,3 @@
+George Galloway (born 16 August 1954) is a British politician, broadcaster, and writer. He has been leader of the Workers Party of Britain since he founded it in 2019, and was a former leader of the Respect Party. Until 2003, he was a member of the Labour Party. From 1987 to 2010, and from 2012 to 2015, Galloway served as a Member of Parliament (MP) for five constituencies, most recently for Rochdale briefly in 2024.
+
+Galloway is a staunch critic of Israel and of Zionism. He regards Israel as an apartheid state committing genocide against Palestinians. In 2013, he said, "I don't recognise Israel and I don't debate with Israelis". The following year, he declared Bradford an "Israel-free zone".

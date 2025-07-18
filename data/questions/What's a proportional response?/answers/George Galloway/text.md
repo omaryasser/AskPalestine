@@ -1,0 +1,3 @@
+[George Galloway](https://askpalestine.info/users/George%20Galloway) said in [this](https://youtu.be/IIHtjH6UkBk?si=8QEkLZM5QJPyRty7&t=915) video:
+
+On the question of "Isn't it Hamas that started this?", Yes, but Israel would have known that if you keep 2.3 million people in a cage, they’re going to try and break out. So there’s all kinds of concomitants should have known in this story. They should have known when they occupied Palestinian land, drove hundreds of thousands of them out, never to return, that those people would have children, and they would have children, and enmity, bitterness, and the desire for revenge would exist forever. And so it has..

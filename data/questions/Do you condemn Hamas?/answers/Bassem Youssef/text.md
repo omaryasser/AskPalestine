@@ -1,0 +1,3 @@
+[Bassem Youssef](https://en.wikipedia.org/wiki/Bassem_Youssef) said in [this](https://youtu.be/4idQbwsvtUo?si=29FXhNC6f1-ioI9j&t=389) video:
+
+Lets for a minute imagine a world without Hamas. What will this world look like? Let's give this world a name and let's name this world the West Bank. Hamas has absolutely no control in the West Bank and since the beginning of this year only through August, 37 Palestinian kids were killed. No music festival, no paragliding, no Hamas. Since the occupation of the West Bank, 7000 Palestinians have been killed. No music festival, no paragliding, no Hamas. I can go on and on and on and on.

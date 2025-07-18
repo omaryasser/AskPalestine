@@ -1,0 +1,3 @@
+[Amnesty International](https://en.wikipedia.org/wiki/Amnesty_International) (also referred to as Amnesty or AI) is an international non-governmental organisation focused on human rights, with its headquarters in the United Kingdom. 
+
+In February 2022, Amnesty [accused](https://www.amnesty.org/en/documents/mde15/5141/2022/en/) Israel of committing the crime of apartheid against the Palestinians, joining other human rights organizations that had previously accused Israel of the crime against humanity. In 2021, Human Rights Watch and B'tselem both accused Israel of apartheid for its treatment of the Palestinians in the occupied territories.
