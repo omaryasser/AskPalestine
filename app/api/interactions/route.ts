@@ -15,21 +15,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Determine interaction type if not explicitly provided
-    let type = interactionType;
-
-    if (!type) {
+    if (!interactionType) {
       console.error("Interaction type is required");
     } else {
       // Validate based on interaction type
-      if (type === "report" && (!feedback || feedback.trim().length < 5)) {
+      if (interactionType === "report" && (!feedback || feedback.trim().length < 5)) {
         return NextResponse.json(
           { error: "Report feedback too short" },
           { status: 400 },
         );
       }
 
-      if (type === "report" && feedback.trim().length > 2000) {
+      if (interactionType === "report" && feedback.trim().length > 2000) {
         return NextResponse.json(
           { error: "Report feedback too long" },
           { status: 400 },
@@ -37,7 +34,7 @@ export async function POST(request: NextRequest) {
       }
 
       if (
-        type === "suggested_answer" &&
+        interactionType === "suggested_answer" &&
         (!answer || answer.trim().length < 10)
       ) {
         return NextResponse.json(
@@ -56,13 +53,13 @@ export async function POST(request: NextRequest) {
         question: question.toString().substring(0, 500),
         answer: answer ? answer.toString().substring(0, 1000) : "",
         feedback: feedback
-          ? type === "report"
+          ? interactionType === "report"
             ? feedback.trim()
             : feedback
           : "",
         timestamp: new Date().toISOString(),
         source: "askpalestine-web",
-        interactionType: type,
+        interactionType: interactionType,
       }),
     });
 
@@ -72,7 +69,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, interactionType: type });
+    return NextResponse.json({ success: true, interactionType: interactionType });
   } catch (error) {
     console.error("Interactions API error:", error);
     // Don't expose internal error details to client

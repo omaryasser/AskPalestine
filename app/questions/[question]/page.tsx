@@ -15,28 +15,10 @@ import {
 import fs from "fs";
 import path from "path";
 
-interface Question {
-  id: string;
-  question: string;
-  metadata?: any;
-}
-
-interface Answer {
-  id: string;
-  question_id: string;
-  author_id: string;
-  content: string;
-  metadata?: any;
-  authorName: string;
-  authorPhoto?: string;
-  authorProfessionalIdentity?: string;
-}
-
 interface PageProps {
   params: Promise<{ question: string }>;
 }
 
-// Generate static params for all questions at build time
 export async function generateStaticParams() {
   try {
     const questionsDir = path.join(process.cwd(), "data", "questions");
@@ -45,8 +27,8 @@ export async function generateStaticParams() {
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name);
 
-    return questionDirs.map((questionDir) => ({
-      question: questionDir,
+    return questionDirs.map((questionDirName) => ({
+      question: questionDirName,
     }));
   } catch (error) {
     console.error("Error generating static params:", error);
@@ -58,7 +40,6 @@ export default async function QuestionPage({ params }: PageProps) {
   const { question: questionId } = await params;
   const decodedQuestionId = decodeURIComponent(questionId);
 
-  // Initialize database if not already done
   initDatabase();
 
   const question = getQuestion(decodedQuestionId);

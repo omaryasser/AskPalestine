@@ -1,38 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AskPalestine
 
-## Getting Started
+A comprehensive Q&A platform featuring well-known pro-Palestinian perspectives.
 
-First, run the development server:
+## 🎯 Mission
+
+AskPalestine aims at making it easy for any pro-palestinian to answer Palestine-related questions.
+
+## 🏗️ Architecture
+
+### Database Design
+- **SQLite** for data storage
+- **Three main tables**: `voices`, `questions`, `answers`
+- **AI Embeddings**: Vector search capabilities for semantic question matching
+
+### API Structure (`/app/api/`)
+- **`/questions/`**: Question management and search
+- **`/voices/`**: Voice profiles and their answers
+- **`/search/`**: Semantic search functionality
+- **`/interactions/`**: User interaction tracking (search, reports, suggestions)
+
+### Page Structure (`/app/`)
+- Question pages and voice profiles
+- Search and pagination functionality
+- Interactive forms and components
+
+## 🚀 Getting Started
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/omaryasser/AskPalestine/
+cd AskPalestine
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables (Optional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# For AI-powered search (optional - falls back to mock embeddings)
+OPENAI_API_KEY=your_openai_api_key
+```
 
-## Learn More
+## 📂 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+askpalestine/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── questions/         # Question pages
+│   ├── voices/           # Voice profile pages
+│   └── search/           # Search functionality
+├── components/           # Reusable React components
+├── lib/                 # Database and utility functions
+├── data/               # Content data (questions & voices)
+│   ├── questions/      # Question directories with answers
+│   └── voices/        # Voice profile data
+└── public/            # Static assets
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+We welcome contributions in two main areas:
 
-## Deploy on Vercel
+### 🖥️ Code Contributions
+- Bug fixes and improvements
+- New features and components
+- Performance optimizations
+- UI/UX enhancements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📚 Content Contributions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Important Guidelines:**
+- **Sources Required**: All content must include verifiable sources
+- **Pro-Palestinian Voices Only**: We only feature answers from well-known pro-Palestinian figures
+- **No Individual Opinions**: Personal opinions without established credibility are not accepted
+- **Documentation**: Include metadata about the source (interviews, articles, speeches, etc.)
 
-# AskPalestine
+#### Adding New Questions
+1. Create a directory in `data/questions/[Question Text]/`
+2. Add `metadata.json` with question details
+3. Include alternative question forms if applicable
+
+#### Adding New Answers
+1. Create answer directory: `data/questions/[Question]/answers/[Voice Name]/`
+2. Add `text.md` with the answer content
+3. Add `metadata.json` with source information (YouTube links, article URLs, etc.)
+4. Ensure the voice exists in `data/voices/`
+
+#### Adding New Voices
+1. Create directory: `data/voices/[Voice Name]/`
+2. Add `bio.md` with biographical information
+3. Add `metadata.json` with profile details
+4. Include photo and professional identity
+
+## 🙏 Acknowledgments
+
+This platform showcases the voices and expertise of numerous pro-Palestinian figures who contribute to public understanding of Palestinian issues.
+
+---
+
+**Disclaimer**: AskPalestine features content attributed to various individuals and organizations. While content originates from these sources, it has been compiled and curated by the AskPalestine team rather than being directly submitted by the featured voices themselves.

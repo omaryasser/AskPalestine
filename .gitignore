@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+askpalestine.db
+
+cloud-run-service.yaml
+
+deploy.sh
+
+Dockerfile.deploy
+
+Dockerfile

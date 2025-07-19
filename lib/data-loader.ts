@@ -202,15 +202,3 @@ export async function loadDataToDatabase() {
 
   console.log("Database loaded successfully");
 }
-
-export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-export function unslugify(slug: string): string {
-  return slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-}

@@ -1,10 +1,9 @@
-import { loadDataToDatabase } from "./lib/data-loader";
+import { loadDataToDatabase } from "./data-loader";
 
 let isInitialized = false;
 let initializationPromise: Promise<void> | null = null;
 
-// Initialize database when the server starts
-export async function ensureDatabaseInitialized() {
+export async function initializeOnServerStart() {
   if (isInitialized) {
     return;
   }
@@ -22,7 +21,7 @@ export async function ensureDatabaseInitialized() {
     } catch (error) {
       console.error("❌ Failed to initialize database:", error);
       initializationPromise = null; // Allow retry
-      throw error;
+      throw error; // Let the API call know it failed
     }
   })();
 

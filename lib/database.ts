@@ -8,7 +8,7 @@ function getOpenAI() {
     return null;
   }
 
-  // Use dynamic import to avoid initialization at build time
+  // Import only if needed
   return import("openai").then((OpenAIModule) => {
     const OpenAI = OpenAIModule.default;
     return new OpenAI({
