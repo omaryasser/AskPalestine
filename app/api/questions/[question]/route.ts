@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { question } = await params;
     const questionId = decodeURIComponent(question);
-    const questionData = getQuestion(questionId);
+    const questionData = await getQuestion(questionId);
 
     if (!questionData) {
       return NextResponse.json(
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    return NextResponse.json({ question: questionData });
+    return NextResponse.json(questionData);
   } catch (error) {
     console.error("Question API error:", error);
     return NextResponse.json(

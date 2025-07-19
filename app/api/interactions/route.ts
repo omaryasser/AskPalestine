@@ -19,7 +19,10 @@ export async function POST(request: NextRequest) {
       console.error("Interaction type is required");
     } else {
       // Validate based on interaction type
-      if (interactionType === "report" && (!feedback || feedback.trim().length < 5)) {
+      if (
+        interactionType === "report" &&
+        (!feedback || feedback.trim().length < 5)
+      ) {
         return NextResponse.json(
           { error: "Report feedback too short" },
           { status: 400 },
@@ -69,7 +72,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, interactionType: interactionType });
+    return NextResponse.json({
+      success: true,
+      interactionType: interactionType,
+    });
   } catch (error) {
     console.error("Interactions API error:", error);
     // Don't expose internal error details to client

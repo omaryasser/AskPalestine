@@ -69,7 +69,7 @@ export function PalestineFlagStats({
       ></div>
 
       {/* Content overlay */}
-      <div className="relative h-full flex items-center justify-center">
+      <div className="relative h-full flex items-center justify-center p-8">
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-8 shadow-lg mx-auto text-center">
           <div className="text-5xl font-bold mb-3" style={{ color: "#006234" }}>
             {count}

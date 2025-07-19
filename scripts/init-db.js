@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const { loadDataToDatabase } = require("./lib/data-loader.ts");
+const { getDatabase } = require("../lib/database.ts");
 
 async function main() {
   try {
     console.log("Initializing database...");
-    await loadDataToDatabase();
+    await getDatabase(); // This will initialize and load data
     console.log("Database initialization complete!");
     process.exit(0);
   } catch (error) {

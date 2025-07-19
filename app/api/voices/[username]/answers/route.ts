@@ -9,9 +9,9 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { username } = await params;
     const decodedUsername = decodeURIComponent(username);
-    const answers = getAnswersByAuthor(decodedUsername);
+    const answers = await getAnswersByAuthor(decodedUsername);
 
-    return NextResponse.json({ answers });
+    return NextResponse.json(answers);
   } catch (error) {
     console.error("Answers by author API error:", error);
     return NextResponse.json(

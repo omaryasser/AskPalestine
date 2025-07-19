@@ -169,6 +169,7 @@ export default function QuestionsPage() {
   };
 
   useEffect(() => {
+    console.log("Loading questions data...");
     const loadData = async () => {
       setLoading(true);
       await Promise.all([

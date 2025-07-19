@@ -46,7 +46,6 @@ askpalestine.db
 cloud-run-service.yaml
 
 deploy.sh
-
 Dockerfile.deploy
-
 Dockerfile
+.dockerignore

@@ -8,42 +8,45 @@ import {
   SectionHeader,
 } from "../../../components/PalestineDesign";
 import {
+  Question,
+  Answer,
   getQuestion,
   getAnswersForQuestion,
-  initDatabase,
 } from "../../../lib/database";
 import fs from "fs";
 import path from "path";
+
+// Force dynamic rendering to avoid database conflicts during build
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ question: string }>;
 }
 
-export async function generateStaticParams() {
-  try {
-    const questionsDir = path.join(process.cwd(), "data", "questions");
-    const questionDirs = fs
-      .readdirSync(questionsDir, { withFileTypes: true })
-      .filter((dirent) => dirent.isDirectory())
-      .map((dirent) => dirent.name);
+// Commented out to prevent static generation conflicts with database
+// export async function generateStaticParams() {
+//   try {
+//     const questionsDir = path.join(process.cwd(), "data", "questions");
+//     const questionDirs = fs
+//       .readdirSync(questionsDir, { withFileTypes: true })
+//       .filter((dirent) => dirent.isDirectory())
+//       .map((dirent) => dirent.name);
 
-    return questionDirs.map((questionDirName) => ({
-      question: questionDirName,
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
+//     return questionDirs.map((questionDir) => ({
+//       question: encodeURIComponent(questionDir),
+//     }));
+//   } catch (error) {
+//     console.error("Error generating static params:", error);
+//     return [];
+//   }
+// }
 
 export default async function QuestionPage({ params }: PageProps) {
   const { question: questionId } = await params;
   const decodedQuestionId = decodeURIComponent(questionId);
 
-  initDatabase();
-
-  const question = getQuestion(decodedQuestionId);
-  const answers = getAnswersForQuestion(decodedQuestionId);
+  const question = await getQuestion(decodedQuestionId);
+  const answers = await getAnswersForQuestion(decodedQuestionId);
 
   if (!question) {
     notFound();
@@ -133,7 +136,7 @@ export default async function QuestionPage({ params }: PageProps) {
 
           {answers.length > 0 ? (
             <div className="space-y-8">
-              {answers.map((answer, index) => (
+              {answers.map((answer: Answer, index: number) => (
                 <div
                   key={answer.id}
                   id={answer.id}

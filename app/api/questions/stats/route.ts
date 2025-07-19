@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { getTotalCounts } from "../../../../lib/database";
-
 export async function GET() {
   try {
-    const counts = getTotalCounts();
+    const counts = await getTotalCounts();
 
     return NextResponse.json(counts);
   } catch (error) {

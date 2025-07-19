@@ -1,4 +1,4 @@
-import { getAllProPalestinians, initDatabase } from "../../lib/database";
+import { ProPalestinian, getAllProPalestinians } from "../../lib/database";
 import ProPalestinianCard from "../../components/ProPalestinianCard";
 import PalestineButton from "../../components/PalestineButton";
 import {
@@ -7,19 +7,8 @@ import {
   SectionHeader,
 } from "../../components/PalestineDesign";
 
-interface ProPalestinian {
-  id: string;
-  name: string;
-  bio: string;
-  photo?: string;
-  professional_identity?: string;
-}
-
 export default async function VoicesPage() {
-  // Initialize database if not already done
-  initDatabase();
-
-  const proPalestinians = getAllProPalestinians();
+  const proPalestinians = await getAllProPalestinians();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,7 +56,7 @@ export default async function VoicesPage() {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {proPalestinians.map((person, index) => (
+              {proPalestinians.map((person: ProPalestinian, index: number) => (
                 <div key={person.id} className="group">
                   <div
                     className="bg-white rounded-lg shadow-md hover:shadow-xl border-t-4 transition-all duration-300 overflow-hidden"
