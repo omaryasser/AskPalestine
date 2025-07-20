@@ -36,10 +36,12 @@ export async function getDatabase(): Promise<Database.Database> {
     console.log("🔗 Initializing new database connection...");
     // Initialize database and load data
     const newDb = initDatabase();
-    
+
     // Check if database already has data (to avoid reloading)
-    const voiceCount = newDb.prepare("SELECT COUNT(*) as count FROM voices").get() as { count: number };
-    
+    const voiceCount = newDb
+      .prepare("SELECT COUNT(*) as count FROM voices")
+      .get() as { count: number };
+
     if (voiceCount.count === 0) {
       console.log("🗄️ Loading data from files...");
       await loadDataToDatabase(newDb);
@@ -285,7 +287,7 @@ export function initDatabase(): Database.Database {
   console.log("🔗 Initializing database connection...");
   const existingDb = getDbInstance();
   if (existingDb) return existingDb;
-  
+
   console.log("📂 Setting up database path...");
   const dbPath = path.join(process.cwd(), "askpalestine.db");
 

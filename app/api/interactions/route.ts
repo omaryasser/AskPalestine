@@ -45,6 +45,16 @@ export async function POST(request: NextRequest) {
           { status: 400 },
         );
       }
+
+      if (
+        interactionType === "email_subscription" &&
+        (!feedback || !feedback.includes("@"))
+      ) {
+        return NextResponse.json(
+          { error: "Valid email address is required" },
+          { status: 400 },
+        );
+      }
     }
 
     const response = await fetch(INTERACTIONS_SCRIPT_URL, {

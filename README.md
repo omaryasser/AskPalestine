@@ -49,7 +49,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-
 ## 4. Project Structure
 
 ```
@@ -81,6 +80,7 @@ We welcome contributions in two main areas:
 ### 5.2. Content Contributions
 
 Help us by:
+
 - Pointing us to unadded answers
 - Updating outdated answers
 - Adding important unasked questions

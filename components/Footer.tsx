@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SubscriptionForm from "./SubscriptionForm";
 
 export default function Footer() {
   return (
@@ -108,6 +109,10 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
+          </div>
+
+          <div>
+            <SubscriptionForm />
           </div>
 
           <div>

@@ -17,7 +17,7 @@ import fs from "fs";
 import path from "path";
 
 // Force dynamic rendering to avoid database conflicts during build
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ question: string }>;

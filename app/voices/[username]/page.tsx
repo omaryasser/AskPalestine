@@ -17,7 +17,7 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 
 // Force dynamic rendering to avoid database conflicts during build
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ username: string }>;
