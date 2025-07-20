@@ -1,4 +1,8 @@
-# AskPalestine <img src="public/favicon.png" alt="AskPalestine Logo" width="32" height="32" style="vertical-align: text-bottom;">
+<div align="center">
+  <img src="public/favicon.png" alt="AskPalestine Logo" width="64" height="64">
+</div>
+
+# AskPalestine
 
 A collaborative Q&A platform indexing well-known pro-Palestinian perspectives.
 
