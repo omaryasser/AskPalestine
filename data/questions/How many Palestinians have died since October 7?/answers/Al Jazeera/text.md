@@ -1,11 +1,9 @@
-As of 17th of August, per [Al Jazeera](https://www.aljazeera.com/news/longform/2023/10/9/israel-hamas-war-in-maps-and-charts-live-tracker):
+As of February 3, 2025, per [Al Jazeera](https://www.aljazeera.com/news/longform/2023/10/9/israel-hamas-war-in-maps-and-charts-live-tracker):
 
-- **Gaza**
-  - **Killed**: at least 40,005 people, including nearly 16,500 children
-  - **Injured**: more than 92,401 people
-  - **Missing**: more than 10,000
-- **Occupied West Bank**
-  - **Killed**: at least 632 people, including more than 147 children
-  - **Injured**: more than 5,400
-
-On the other side, 1,139 Israelis have been killed and 8730 have been injured.
+* Gaza
+  * Killed: at least 61,709 people, including 17,492 children
+  * Injured: more than 111,588 people
+  * Missing and presumed dead: more than 14,222
+* Occupied West Bank
+  * Killed: at least 905 people, including at least 181 children
+  * Injured: more than 7,370 people
