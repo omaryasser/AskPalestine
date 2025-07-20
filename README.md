@@ -4,7 +4,7 @@
 
 # AskPalestine
 
-A collaborative Q&A platform indexing well-known pro-Palestinian perspectives.
+A collaborative Q&A platform indexing well-known pro-Palestinian answers.
 
 ## 1. Mission
 
