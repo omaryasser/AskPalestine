@@ -6,12 +6,13 @@ import ReactMarkdown from "react-markdown";
 
 interface Answer {
   id: string;
-  author_id: string;
+  authorId?: string;
   authorName?: string;
   authorPhoto?: string;
   authorProfessionalIdentity?: string;
   content: string;
-  metadata?: any;
+  source?: string;
+  source_type?: string;
   created_at?: string;
 }
 
@@ -63,7 +64,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
         },
         body: JSON.stringify({
           question: questionId,
-          answer: `${answer.authorName || answer.author_id}: ${answer.content.substring(0, 100)}...`,
+          answer: `${answer.authorName || answer.authorId}: ${answer.content.substring(0, 100)}...`,
           feedback: feedback,
           interactionType: "report",
         }),
@@ -98,13 +99,13 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
           {answer.authorPhoto ? (
             <img
               src={answer.authorPhoto}
-              alt={answer.authorName || answer.author_id}
+              alt={answer.authorName || answer.authorId}
               className="h-10 w-10 rounded-full object-cover"
             />
           ) : (
             <div className="h-10 w-10 bg-palestine-green rounded-full flex items-center justify-center">
               <span className="text-white font-semibold text-sm">
-                {(answer.authorName || answer.author_id)
+                {(answer.authorName || answer.authorId || 'Anonymous')
                   .split(" ")
                   .map((n: string) => n[0])
                   .join("")
@@ -114,18 +115,18 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
           )}
           <div>
             <Link
-              href={`/voices/${encodeURIComponent(answer.author_id)}`}
+              href={`/voices/${encodeURIComponent(answer.authorId || '')}`}
               className="font-semibold text-gray-900 hover:text-palestine-green transition-colors cursor-pointer"
             >
-              {answer.authorName || answer.author_id}
+              {answer.authorName || answer.authorId}
             </Link>
             <p className="text-sm text-gray-500">
               {answer.authorProfessionalIdentity || "Palestinian Voice"}
             </p>
-            {(answer.created_at || answer.metadata?.created_at) && (
+            {answer.created_at && (
               <p className="text-xs text-gray-400">
                 Added on{" "}
-                {formatDate(answer.created_at || answer.metadata?.created_at)}
+                {formatDate(answer.created_at)}
               </p>
             )}
           </div>
@@ -183,12 +184,12 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
         <ReactMarkdown>{answer.content}</ReactMarkdown>
       </div>
 
-      {answer.metadata?.source_type === "YOUTUBE" &&
-        answer.metadata?.source && (
+      {answer.source_type === "YOUTUBE" &&
+        answer.source && (
           <div className="mt-4">
             <div className="aspect-w-16 aspect-h-9">
               <iframe
-                src={answer.metadata.source}
+                src={answer.source}
                 title="YouTube video"
                 className="w-full h-64 rounded-lg"
                 allowFullScreen

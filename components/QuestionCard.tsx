@@ -7,7 +7,8 @@ import ReactMarkdown from "react-markdown";
 interface Question {
   id: string;
   question: string;
-  metadata?: any;
+  question_forms?: string[];
+  created_at?: string;
   answerCount?: number;
   authors?: Array<{
     id: string;
@@ -30,8 +31,8 @@ export default function QuestionCard({
 
   const questionSlug = encodeURIComponent(question.id);
 
-  // Parse metadata to get alternative question forms
-  const questionForms = question.metadata?.question_forms || [
+  // Parse question forms array
+  const questionForms = question.question_forms || [
     question.question,
   ];
   const alternativeQuestions = questionForms.slice(1); // Get all except the first one

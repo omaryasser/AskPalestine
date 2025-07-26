@@ -15,7 +15,8 @@ import {
 interface Question {
   id: string;
   question: string;
-  metadata?: any;
+  question_forms?: string[];
+  created_at?: string;
 }
 
 interface QuestionWithAnswers extends Question {
@@ -308,8 +309,8 @@ export default function QuestionsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8 items-stretch">
               {unansweredQuestions.questions.map((question, index) => {
-                // Parse metadata to get alternative question forms
-                const questionForms = question.metadata?.question_forms || [
+                // Parse question forms array
+                const questionForms = question.question_forms || [
                   question.question,
                 ];
                 const alternativeQuestions = questionForms.slice(1);

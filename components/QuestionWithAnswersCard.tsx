@@ -6,7 +6,8 @@ import Link from "next/link";
 interface Question {
   id: string;
   question: string;
-  metadata?: any;
+  question_forms?: string[];
+  created_at?: string;
 }
 
 interface Author {
@@ -29,8 +30,8 @@ export default function QuestionWithAnswersCard({
   const [isExpanded, setIsExpanded] = useState(false);
   const questionSlug = encodeURIComponent(question.id);
 
-  // Parse metadata to get alternative question forms
-  const questionForms = question.metadata?.question_forms || [
+  // Parse question forms array
+  const questionForms = question.question_forms || [
     question.question,
   ];
   const alternativeQuestions = questionForms.slice(1); // Get all except the first one

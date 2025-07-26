@@ -13,7 +13,9 @@ import {
   ProPalestinian,
   getTotalCounts,
   getQuestionsWithMostAnswers,
+  getLatestAnsweredQuestions,
   getUnansweredQuestions,
+  getLatestUnansweredQuestions,
   getAllProPalestinians,
 } from "../lib/database";
 import Link from "next/link";
@@ -22,19 +24,23 @@ async function getHomePageData() {
   // Get actual counts from database
   const counts = await getTotalCounts();
 
-  // Get questions with most answers instead of random
-  const questionsWithAnswers = await getQuestionsWithMostAnswers(6);
+  // Get questions with most answers
+  const questionsWithMostAnswers = await getQuestionsWithMostAnswers(6);
 
-  // Get unanswered questions
-  const unansweredQuestions = await getUnansweredQuestions(6);
+  // Get latest answered questions
+  const latestAnsweredQuestions = await getLatestAnsweredQuestions(6);
+
+  // Get latest unanswered questions instead of random
+  const latestUnansweredQuestions = await getLatestUnansweredQuestions(6);
 
   // Get all voices for the sliding row
   const allProPalestinians = await getAllProPalestinians();
 
   return {
     counts,
-    questionsWithAnswers,
-    unansweredQuestions,
+    questionsWithMostAnswers,
+    latestAnsweredQuestions,
+    latestUnansweredQuestions,
     allProPalestinians,
   };
 }
@@ -42,8 +48,9 @@ async function getHomePageData() {
 export default async function Home() {
   const {
     counts,
-    questionsWithAnswers,
-    unansweredQuestions,
+    questionsWithMostAnswers,
+    latestAnsweredQuestions,
+    latestUnansweredQuestions,
     allProPalestinians,
   } = await getHomePageData();
 
@@ -140,12 +147,12 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Questions with Most Answers */}
+        {/* Most Answered Questions */}
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
-              title={`Answered Questions (${counts.questionsWithAnswers})`}
-              subtitle="Questions with expert responses from Palestinian voices"
+              title={`Most Answered Questions (${counts.questionsWithAnswers})`}
+              subtitle="Popular questions with comprehensive expert responses"
             />
             <div className="sm:ml-auto">
               <PalestineButton href="/questions">Browse All →</PalestineButton>
@@ -153,7 +160,7 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {questionsWithAnswers.map((question: any, index: number) => (
+            {questionsWithMostAnswers.map((question: any, index: number) => (
               <div
                 key={question.id}
                 style={{
@@ -166,12 +173,38 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Unanswered Questions */}
+        {/* Latest Answered Questions */}
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
-              title={`Unanswered Questions (${unansweredQuestions.length})`}
-              subtitle="Help us find answers to these important questions"
+              title={`Latest Answered Questions`}
+              subtitle="Recently answered questions from Palestinian voices"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/questions">Browse All →</PalestineButton>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {latestAnsweredQuestions.map((question: any, index: number) => (
+              <div
+                key={question.id}
+                style={{
+                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
+                }}
+              >
+                <QuestionWithAnswersCard question={question} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Latest Unanswered Questions */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Latest Unanswered Questions (${latestUnansweredQuestions.length})`}
+              subtitle="Recently asked questions seeking expert responses"
             />
             <div className="sm:ml-auto">
               <PalestineButton href="/questions">
@@ -181,7 +214,7 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {unansweredQuestions.map((question: Question, index: number) => (
+            {latestUnansweredQuestions.map((question: Question, index: number) => (
               <div
                 key={question.id}
                 className="border-t-4 h-full"
@@ -194,7 +227,7 @@ export default async function Home() {
             ))}
           </div>
 
-          {unansweredQuestions.length === 0 && (
+          {latestUnansweredQuestions.length === 0 && (
             <div
               className="bg-white rounded-lg shadow-md border-t-4 p-8 text-center"
               style={{ borderTopColor: "#006234" }}

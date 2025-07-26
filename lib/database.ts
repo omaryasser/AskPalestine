@@ -181,6 +181,16 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
 
     console.log(`Processing: ${questionText}`);
 
+    // Convert DD-MM-YYYY to YYYY-MM-DD for proper date storage
+    const convertDateFormat = (dateStr: string): string | null => {
+      if (!dateStr) return null;
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`; // DD-MM-YYYY to YYYY-MM-DD
+      }
+      return dateStr;
+    };
+
     // Generate embedding for all question forms combined for better search matching
     const allQuestionForms = metadata.question_forms || [];
     const combinedQuestionText = allQuestionForms.join(" | ");
@@ -188,13 +198,14 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
 
     // Insert question first
     const insertQuestion = database.prepare(
-      "INSERT OR REPLACE INTO questions (id, question, embedding, metadata) VALUES (?, ?, ?, ?)",
+      "INSERT OR REPLACE INTO questions (id, question, embedding, question_forms, created_at) VALUES (?, ?, ?, ?, ?)",
     );
     insertQuestion.run(
       questionDir,
       questionText,
       JSON.stringify(embedding),
-      JSON.stringify(metadata),
+      JSON.stringify(metadata.question_forms || []),
+      convertDateFormat(metadata.created_at),
     );
 
     // Load answers (only if answers directory exists)
@@ -213,7 +224,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
 
         // Read answer metadata
         const answerMetadataPath = path.join(answerPath, "metadata.json");
-        let answerMetadata = {};
+        let answerMetadata: any = {};
         if (fs.existsSync(answerMetadataPath)) {
           answerMetadata = JSON.parse(
             fs.readFileSync(answerMetadataPath, "utf-8"),
@@ -222,14 +233,16 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
 
         // Insert answer with proper foreign key reference
         const insertAnswer = database.prepare(
-          "INSERT OR REPLACE INTO answers (id, question_id, author_id, content, metadata) VALUES (?, ?, ?, ?, ?)",
+          "INSERT OR REPLACE INTO answers (id, question_id, author_id, content, source, source_type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
         );
         insertAnswer.run(
           `${questionDir}-${answerDir}`,
           questionDir, // This must match the question's id
           answerDir, // This must match a voice's id
           answerContent,
-          JSON.stringify(answerMetadata),
+          (answerMetadata as any).source || null,
+          (answerMetadata as any).source_type || null,
+          convertDateFormat((answerMetadata as any).created_at),
         );
       }
     }
@@ -256,7 +269,8 @@ export interface Question {
   id: string;
   question: string;
   embedding?: number[];
-  metadata?: any;
+  question_forms?: string[];
+  created_at?: string;
 }
 
 export interface Answer {
@@ -264,7 +278,9 @@ export interface Answer {
   questionId: string;
   authorId: string;
   content: string;
-  metadata?: any;
+  source?: string;
+  source_type?: string;
+  created_at?: string;
 }
 
 export interface ProPalestinian {
@@ -343,7 +359,8 @@ export function initDatabase(): Database.Database {
       id TEXT PRIMARY KEY,
       question TEXT NOT NULL,
       embedding TEXT,
-      metadata TEXT
+      question_forms TEXT, -- JSON array of alternative question forms
+      created_at DATE -- Date in YYYY-MM-DD format
     );
 
     CREATE TABLE IF NOT EXISTS answers (
@@ -351,7 +368,9 @@ export function initDatabase(): Database.Database {
       question_id TEXT NOT NULL,
       author_id TEXT NOT NULL,
       content TEXT NOT NULL,
-      metadata TEXT,
+      source TEXT, -- e.g., "Al Jazeera"
+      source_type TEXT, -- e.g., "WEB_ARTICLE"
+      created_at DATE, -- Date in YYYY-MM-DD format
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE,
       FOREIGN KEY (author_id) REFERENCES voices (id) ON DELETE CASCADE
     );
@@ -448,7 +467,7 @@ export async function searchQuestions(
       ...q,
       similarity,
       embedding: embedding,
-      metadata: q.metadata ? JSON.parse(q.metadata) : {},
+      question_forms: q.question_forms ? JSON.parse(q.question_forms) : [],
       answerCount: q.answerCount,
       authors: authors,
     };
@@ -484,7 +503,7 @@ export async function getQuestion(id: string): Promise<Question | null> {
 
   return {
     ...question,
-    metadata: question.metadata ? JSON.parse(question.metadata) : {},
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
   };
 }
 
@@ -506,7 +525,7 @@ export async function getAnswersForQuestion(questionId: string): Promise<
 
   return answers.map((answer: any) => ({
     ...answer,
-    metadata: answer.metadata ? JSON.parse(answer.metadata) : {},
+    // No longer need to parse metadata since fields are separate
   }));
 }
 
@@ -539,7 +558,6 @@ export async function getAnswersByAuthor(
 
   return answers.map((answer: any) => ({
     ...answer,
-    metadata: answer.metadata ? JSON.parse(answer.metadata) : {},
   }));
 }
 
@@ -550,7 +568,7 @@ export async function getAllQuestions(): Promise<Question[]> {
 
   return questions.map((question: any) => ({
     ...question,
-    metadata: question.metadata ? JSON.parse(question.metadata) : {},
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
   }));
 }
 
@@ -566,7 +584,7 @@ export async function getQuestionsWithAnswers(): Promise<Question[]> {
 
   return questions.map((question: any) => ({
     ...question,
-    metadata: question.metadata ? JSON.parse(question.metadata) : {},
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
   }));
 }
 
@@ -657,7 +675,7 @@ export async function getQuestionsWithAnswersPaginated(
 
       return {
         ...question,
-        metadata: question.metadata ? JSON.parse(question.metadata) : {},
+        question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
         answerCount: question.answerCount,
         authors: authors,
       };
@@ -701,7 +719,7 @@ export async function getQuestionsWithoutAnswersPaginated(
   return {
     questions: questions.map((question: any) => ({
       ...question,
-      metadata: question.metadata ? JSON.parse(question.metadata) : {},
+      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
     })),
     totalCount,
     hasMore: page < totalPages,
@@ -764,7 +782,7 @@ export async function getRandomQuestions(
 
   return questions.map((question: any) => ({
     ...question,
-    metadata: question.metadata ? JSON.parse(question.metadata) : {},
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
   }));
 }
 
@@ -818,6 +836,7 @@ export async function getQuestionsWithMostAnswers(limit: number = 6): Promise<
           : undefined,
       professional_identity:
         authorProfessionalIdentities[index] !== "null" &&
+        authorProfessionalIdentities[index] !== "null" &&
         authorProfessionalIdentities[index]
           ? authorProfessionalIdentities[index]
           : undefined,
@@ -825,7 +844,71 @@ export async function getQuestionsWithMostAnswers(limit: number = 6): Promise<
 
     return {
       ...question,
-      metadata: question.metadata ? JSON.parse(question.metadata) : {},
+      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+      answerCount: question.answerCount,
+      authors: authors,
+    };
+  });
+}
+
+export async function getLatestAnsweredQuestions(limit: number = 6): Promise<
+  (Question & {
+    answerCount: number;
+    authors: Array<{
+      id: string;
+      name: string;
+      photo?: string;
+      professional_identity?: string;
+    }>;
+  })[]
+> {
+  const database = await getDatabase();
+  const stmt = database.prepare(`
+    SELECT 
+      q.*,
+      COUNT(a.id) as answerCount,
+      GROUP_CONCAT(DISTINCT p.id) as authorIds,
+      GROUP_CONCAT(DISTINCT p.name) as authorNames,
+      GROUP_CONCAT(DISTINCT p.photo) as authorPhotos,
+      GROUP_CONCAT(DISTINCT p.professional_identity) as authorProfessionalIdentities
+    FROM questions q 
+    JOIN answers a ON q.id = a.question_id 
+    JOIN voices p ON a.author_id = p.id
+    GROUP BY q.id 
+    ORDER BY q.created_at DESC, q.id DESC
+    LIMIT ?
+  `);
+  const questions = stmt.all(limit) as any[];
+
+  return questions.map((question: any) => {
+    const authorIds = question.authorIds ? question.authorIds.split(",") : [];
+    const authorNames = question.authorNames
+      ? question.authorNames.split(",")
+      : [];
+    const authorPhotos = question.authorPhotos
+      ? question.authorPhotos.split(",")
+      : [];
+    const authorProfessionalIdentities = question.authorProfessionalIdentities
+      ? question.authorProfessionalIdentities.split(",")
+      : [];
+
+    const authors = authorIds.map((id: string, index: number) => ({
+      id: id,
+      name: authorNames[index] || "",
+      photo:
+        authorPhotos[index] !== "null" && authorPhotos[index]
+          ? authorPhotos[index]
+          : undefined,
+      professional_identity:
+        authorProfessionalIdentities[index] !== "null" &&
+        authorProfessionalIdentities[index]
+          ? authorProfessionalIdentities[index]
+          : undefined,
+    }));
+
+    return {
+      ...question,
+      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
       answerCount: question.answerCount,
       authors: authors,
     };
@@ -848,6 +931,26 @@ export async function getUnansweredQuestions(
 
   return questions.map((question: any) => ({
     ...question,
-    metadata: question.metadata ? JSON.parse(question.metadata) : {},
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+  }));
+}
+
+export async function getLatestUnansweredQuestions(
+  limit: number = 6,
+): Promise<Question[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare(`
+    SELECT q.* 
+    FROM questions q 
+    LEFT JOIN answers a ON q.id = a.question_id 
+    WHERE a.question_id IS NULL 
+    ORDER BY q.created_at DESC, q.id DESC
+    LIMIT ?
+  `);
+  const questions = stmt.all(limit) as any[];
+
+  return questions.map((question: any) => ({
+    ...question,
+    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
   }));
 }

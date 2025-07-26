@@ -82,8 +82,8 @@ export default async function QuestionPage({ params }: PageProps) {
         </div>
 
         {/* Alternative Question Forms */}
-        {question.metadata?.question_forms &&
-          question.metadata.question_forms.length > 1 && (
+        {question.question_forms &&
+          question.question_forms.length > 1 && (
             <div className="mb-8">
               <div className="bg-white rounded-lg shadow-md border-t-4 border-palestine-green p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
@@ -103,7 +103,7 @@ export default async function QuestionPage({ params }: PageProps) {
                   Alternative Question Forms
                 </h3>
                 <div className="space-y-2">
-                  {question.metadata.question_forms
+                  {question.question_forms
                     .slice(1)
                     .map((altQuestion: string, index: number) => (
                       <div key={index} className="flex items-start">

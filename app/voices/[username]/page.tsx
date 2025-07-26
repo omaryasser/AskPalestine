@@ -179,11 +179,11 @@ export default async function ProPalestinianPage({ params }: PageProps) {
                       <ReactMarkdown>{answer.content}</ReactMarkdown>
                     </div>
 
-                    {answer.metadata?.source &&
-                      answer.metadata?.source_type === "YOUTUBE" && (
+                    {answer.source &&
+                      answer.source_type === "YOUTUBE" && (
                         <div className="mt-4">
                           <iframe
-                            src={answer.metadata.source}
+                            src={answer.source}
                             title="YouTube video"
                             className="w-full h-64 rounded-lg"
                             allowFullScreen
