@@ -23,24 +23,6 @@ interface PageProps {
   params: Promise<{ question: string }>;
 }
 
-// Commented out to prevent static generation conflicts with database
-// export async function generateStaticParams() {
-//   try {
-//     const questionsDir = path.join(process.cwd(), "data", "questions");
-//     const questionDirs = fs
-//       .readdirSync(questionsDir, { withFileTypes: true })
-//       .filter((dirent) => dirent.isDirectory())
-//       .map((dirent) => dirent.name);
-
-//     return questionDirs.map((questionDir) => ({
-//       question: encodeURIComponent(questionDir),
-//     }));
-//   } catch (error) {
-//     console.error("Error generating static params:", error);
-//     return [];
-//   }
-// }
-
 export default async function QuestionPage({ params }: PageProps) {
   const { question: questionId } = await params;
   const decodedQuestionId = decodeURIComponent(questionId);

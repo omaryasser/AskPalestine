@@ -233,7 +233,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
 
         // Insert answer with proper foreign key reference
         const insertAnswer = database.prepare(
-          "INSERT OR REPLACE INTO answers (id, question_id, author_id, content, source, source_type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "INSERT OR REPLACE INTO answers (id, question_id, author_id, content, source, source_type, source_name, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         );
         insertAnswer.run(
           `${questionDir}-${answerDir}`,
@@ -242,6 +242,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
           answerContent,
           (answerMetadata as any).source || null,
           (answerMetadata as any).source_type || null,
+          (answerMetadata as any).source_name || null,
           convertDateFormat((answerMetadata as any).created_at),
         );
       }
@@ -280,6 +281,7 @@ export interface Answer {
   content: string;
   source?: string;
   source_type?: string;
+  source_name?: string;
   created_at?: string;
 }
 
@@ -370,6 +372,7 @@ export function initDatabase(): Database.Database {
       content TEXT NOT NULL,
       source TEXT, -- e.g., "Al Jazeera"
       source_type TEXT, -- e.g., "WEB_ARTICLE"
+      source_name TEXT, -- e.g., "Middle East Monitor"
       created_at DATE, -- Date in YYYY-MM-DD format
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE,
       FOREIGN KEY (author_id) REFERENCES voices (id) ON DELETE CASCADE

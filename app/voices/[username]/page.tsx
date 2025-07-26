@@ -7,6 +7,7 @@ import {
 } from "../../../lib/database";
 import PalestineButton from "../../../components/PalestineButton";
 import ShareButton from "../../../components/ShareButton";
+import AnswerCard from "../../../components/AnswerCard";
 import {
   PageHeader,
   PalestineFlagStats,
@@ -22,24 +23,6 @@ export const dynamic = "force-dynamic";
 interface PageProps {
   params: Promise<{ username: string }>;
 }
-
-// Commented out to prevent static generation conflicts with database
-// export async function generateStaticParams() {
-//   try {
-//     const voicesDir = path.join(process.cwd(), "data", "voices");
-//     const voiceDirs = fs
-//       .readdirSync(voicesDir, { withFileTypes: true })
-//       .filter((dirent) => dirent.isDirectory())
-//       .map((dirent) => dirent.name);
-
-//     return voiceDirs.map((personDir) => ({
-//       username: personDir,
-//     }));
-//   } catch (error) {
-//     console.error("Error generating static params:", error);
-//     return [];
-//   }
-// }
 
 export default async function ProPalestinianPage({ params }: PageProps) {
   const { username } = await params;
@@ -160,12 +143,12 @@ export default async function ProPalestinianPage({ params }: PageProps) {
                 (answer: Answer & { question: string }, index: number) => (
                   <div
                     key={answer.id}
-                    className="bg-white rounded-lg shadow-md border-t-4 p-6 transition-all duration-300 hover:shadow-lg"
+                    className="bg-white rounded-lg shadow-md border-t-4"
                     style={{
                       borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
                     }}
                   >
-                    <div className="mb-4">
+                    <div className="p-6 border-b border-gray-100">
                       <a
                         href={`/questions/${encodeURIComponent(answer.question)}`}
                         className="text-lg font-semibold hover:underline transition-colors"
@@ -174,35 +157,21 @@ export default async function ProPalestinianPage({ params }: PageProps) {
                         {answer.question}
                       </a>
                     </div>
-
-                    <div className="markdown-content mb-4">
-                      <ReactMarkdown>{answer.content}</ReactMarkdown>
-                    </div>
-
-                    {answer.source &&
-                      answer.source_type === "YOUTUBE" && (
-                        <div className="mt-4">
-                          <iframe
-                            src={answer.source}
-                            title="YouTube video"
-                            className="w-full h-64 rounded-lg"
-                            allowFullScreen
-                          />
-                        </div>
-                      )}
-
-                    <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100">
-                      <ShareButton
-                        url={`${
-                          process.env.NEXT_PUBLIC_BASE_URL ||
-                          "http://localhost:3000"
-                        }/questions/${encodeURIComponent(answer.question)}`}
-                        text="Question link copied to clipboard!"
-                        className="text-sm font-medium transition-colors hover:underline text-palestine-green"
-                      >
-                        Share Question
-                      </ShareButton>
-                    </div>
+                    <AnswerCard
+                      answer={{
+                        id: answer.id,
+                        authorId: answer.authorId,
+                        authorName: person.name,
+                        authorPhoto: person.photo,
+                        authorProfessionalIdentity: person.professional_identity,
+                        content: answer.content,
+                        source: answer.source,
+                        source_type: answer.source_type,
+                        source_name: answer.source_name,
+                        created_at: answer.created_at,
+                      }}
+                      questionId={answer.question}
+                    />
                   </div>
                 ),
               )}

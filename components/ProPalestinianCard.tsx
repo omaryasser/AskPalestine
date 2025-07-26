@@ -40,56 +40,55 @@ export default function ProPalestinianCard({
     person.bio.substring(0, 200) + (person.bio.length > 200 ? "..." : "");
 
   return (
-    <div className="p-6">
-      <div className="flex items-center space-x-4 mb-4">
-        {person.photo ? (
-          <img
-            src={person.photo}
-            alt={person.name}
-            className="h-16 w-16 rounded-full object-cover"
-          />
-        ) : (
-          <div className="h-16 w-16 bg-palestine-green rounded-full flex items-center justify-center">
-            <span className="text-white font-semibold text-lg">
-              {person.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .slice(0, 2)}
-            </span>
+    <Link href={`/voices/${personSlug}`} className="block">
+      <div className="p-6 hover:bg-gray-50 transition-colors cursor-pointer">
+        <div className="flex items-center space-x-4 mb-4">
+          {person.photo ? (
+            <img
+              src={person.photo}
+              alt={person.name}
+              className="h-16 w-16 rounded-full object-cover"
+            />
+          ) : (
+            <div className="h-16 w-16 bg-palestine-green rounded-full flex items-center justify-center">
+              <span className="text-white font-semibold text-lg">
+                {person.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .slice(0, 2)}
+              </span>
+            </div>
+          )}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">{person.name}</h3>
+            <p className="text-sm text-gray-500">
+              {person.professional_identity || "Palestinian Voice"}
+            </p>
           </div>
-        )}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">{person.name}</h3>
-          <p className="text-sm text-gray-500">
-            {person.professional_identity || "Palestinian Voice"}
-          </p>
+        </div>
+
+        <div className="text-gray-600 mb-4 line-clamp-3 markdown-content">
+          <MarkdownRenderer>{bioPreview}</MarkdownRenderer>
+        </div>
+
+        <div className="inline-flex items-center text-palestine-green font-medium">
+          View Profile & Answers
+          <svg
+            className="ml-2 h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
         </div>
       </div>
-
-      <div className="text-gray-600 mb-4 line-clamp-3 markdown-content">
-        <MarkdownRenderer>{bioPreview}</MarkdownRenderer>
-      </div>
-
-      <Link
-        href={`/voices/${personSlug}`}
-        className="inline-flex items-center text-palestine-green hover:text-gray-700 font-medium transition-colors"
-      >
-        View Profile & Answers
-        <svg
-          className="ml-2 h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </Link>
-    </div>
+    </Link>
   );
 }

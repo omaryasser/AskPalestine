@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
-import { initDatabase, getEmbedding, resetDatabase } from "./database";
+import { initDatabase, getEmbedding } from "./database";
 
 export interface QuestionData {
   id: string;
@@ -26,9 +25,6 @@ export interface ProPalestinianData {
 }
 
 export async function loadDataToDatabase() {
-  // Reset any existing database connection first
-  resetDatabase();
-  
   const database = initDatabase();
   const dataPath = path.join(process.cwd(), "data");
 
