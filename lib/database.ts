@@ -68,6 +68,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
     database.prepare("DELETE FROM answers").run();
     database.prepare("DELETE FROM questions").run();
     database.prepare("DELETE FROM voices").run();
+    database.prepare("DELETE FROM genocidal_voices").run();
 
     // FIRST: Load voices (they must exist before answers can reference them)
     const proPalestiniansPath = path.join(dataPath, "voices");
@@ -141,6 +142,38 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
           photo,
           professional_identity,
         );
+      }
+    }
+
+    // Load genocidal voices
+    const genocidealVoicesPath = path.join(dataPath, "genocidal-voices");
+    if (fs.existsSync(genocidealVoicesPath)) {
+      const genocidealVoiceDirs = fs.readdirSync(genocidealVoicesPath);
+      console.log(`Found ${genocidealVoiceDirs.length} genocidal voices to process`);
+
+      for (const voiceDir of genocidealVoiceDirs) {
+        const voicePath = path.join(genocidealVoicesPath, voiceDir);
+        if (!fs.statSync(voicePath).isDirectory()) continue;
+
+        const dataPath = path.join(voicePath, "data.json");
+        
+        if (!fs.existsSync(dataPath)) continue;
+
+        try {
+          const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+          
+          const insertGenocidealVoice = database.prepare(
+            "INSERT OR REPLACE INTO genocidal_voices (id, name, title, quotes) VALUES (?, ?, ?, ?)",
+          );
+          insertGenocidealVoice.run(
+            voiceDir,
+            data.name,
+            data.title,
+            JSON.stringify(data.quotes || [])
+          );
+        } catch (error) {
+          console.warn(`Error processing genocidal voice ${voiceDir}:`, error);
+        }
       }
     }
   });
@@ -293,6 +326,17 @@ export interface ProPalestinian {
   professional_identity?: string;
 }
 
+export interface GenocidealVoice {
+  id: string;
+  name: string;
+  title: string;
+  quotes: {
+    quote: string;
+    context: string;
+    sources: { name: string; link: string; date?: string }[];
+  }[];
+}
+
 export interface PaginatedQuestions {
   questions: Question[];
   totalCount: number;
@@ -355,6 +399,13 @@ export function initDatabase(): Database.Database {
       bio TEXT NOT NULL,
       photo TEXT,
       professional_identity TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS genocidal_voices (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      title TEXT NOT NULL,
+      quotes TEXT NOT NULL -- JSON array of quotes with context and sources
     );
 
     CREATE TABLE IF NOT EXISTS questions (
@@ -764,11 +815,20 @@ export async function getTotalCounts() {
     questionsWithAnswersStmt.get() as { count: number }
   ).count;
 
+  // Get total genocidal voices
+  const totalGenocidealVoicesStmt = database.prepare(
+    "SELECT COUNT(*) as count FROM genocidal_voices",
+  );
+  const totalGenocidealVoices = (
+    totalGenocidealVoicesStmt.get() as { count: number }
+  ).count;
+
   return {
     totalQuestions,
     totalProPalestinians,
     totalAnswers,
     questionsWithAnswers,
+    totalGenocidealVoices,
   };
 }
 
@@ -955,5 +1015,40 @@ export async function getLatestUnansweredQuestions(
   return questions.map((question: any) => ({
     ...question,
     question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+  }));
+}
+
+export async function getAllGenocidealVoices(): Promise<GenocidealVoice[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM genocidal_voices ORDER BY name");
+  const voices = stmt.all() as any[];
+
+  return voices.map((voice: any) => ({
+    ...voice,
+    quotes: JSON.parse(voice.quotes || "[]"),
+  }));
+}
+
+export async function getGenocidealVoice(id: string): Promise<GenocidealVoice | null> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM genocidal_voices WHERE id = ?");
+  const voice = stmt.get(id) as any;
+
+  if (!voice) return null;
+
+  return {
+    ...voice,
+    quotes: JSON.parse(voice.quotes || "[]"),
+  };
+}
+
+export async function getRandomGenocidealVoices(limit: number = 6): Promise<GenocidealVoice[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM genocidal_voices ORDER BY RANDOM() LIMIT ?");
+  const voices = stmt.all(limit) as any[];
+
+  return voices.map((voice: any) => ({
+    ...voice,
+    quotes: JSON.parse(voice.quotes || "[]"),
   }));
 }

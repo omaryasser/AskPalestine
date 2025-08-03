@@ -1,0 +1,28 @@
+{
+  "name": "Benjamin Netanyahu",
+  "title": "Israeli Prime Minister",
+  "quotes": [
+    {
+      "quote": "Promise to turn Gaza into a deserted island",
+      "context": "Promise to turn Gaza into a deserted island",
+      "sources": [
+        {
+          "name": "Al Jazeera - Fears of a ground invasion of Gaza grow as Israel vows 'mighty vengeance'",
+          "link": "https://www.aljazeera.com/news/2023/10/7/world-is-watching-fears-grow-of-a-massive-gaza-invasion-by-israel",
+          "date": "7 October 2023"
+        }
+      ]
+    },
+    {
+      "quote": "You must remember what Amalek has done to you, says our Holy Bible — we do remember",
+      "context": "Biblical reference to Amalek (genocidal passage calling for destruction of men, women, children and infants)",
+      "sources": [
+        {
+          "name": "NPR - Netanyahu's references to violent biblical passages raise alarm among critics",
+          "link": "https://www.npr.org/2023/11/07/1211133201/netanyahus-references-to-violent-biblical-passages-raise-alarm-among-critics",
+          "date": "7 November 2023"
+        }
+      ]
+    }
+  ]
+}

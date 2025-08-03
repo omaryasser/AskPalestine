@@ -1,6 +1,7 @@
 import QuestionCard from "../components/QuestionCard";
 import QuestionWithAnswersCard from "../components/QuestionWithAnswersCard";
 import ProPalestinianCard from "../components/ProPalestinianCard";
+import GenocidealVoiceCard from "../components/GenocidealVoiceCard";
 import PalestineButton from "../components/PalestineButton";
 import SearchForm from "../components/SearchForm";
 import {
@@ -14,9 +15,9 @@ import {
   getTotalCounts,
   getQuestionsWithMostAnswers,
   getLatestAnsweredQuestions,
-  getUnansweredQuestions,
   getLatestUnansweredQuestions,
   getAllProPalestinians,
+  getRandomGenocidealVoices,
 } from "../lib/database";
 import Link from "next/link";
 
@@ -36,12 +37,16 @@ async function getHomePageData() {
   // Get all voices for the sliding row
   const allProPalestinians = await getAllProPalestinians();
 
+  // Get random genocidal voices
+  const genocidealVoices = await getRandomGenocidealVoices(6);
+
   return {
     counts,
     questionsWithMostAnswers,
     latestAnsweredQuestions,
     latestUnansweredQuestions,
     allProPalestinians,
+    genocidealVoices,
   };
 }
 
@@ -52,6 +57,7 @@ export default async function Home() {
     latestAnsweredQuestions,
     latestUnansweredQuestions,
     allProPalestinians,
+    genocidealVoices,
   } = await getHomePageData();
 
   return (
@@ -144,6 +150,61 @@ export default async function Home() {
                   </div>
                 </div>
               ))}
+          </div>
+        </section>
+
+        {/* Zionist Genocidal Voices Section */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Zionist Genocidal Voices (${counts.totalGenocidealVoices})`}
+              subtitle="Documented genocidal statements from Israeli officials"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/genocidal-voices">View All →</PalestineButton>
+            </div>
+          </div>
+
+          {genocidealVoices.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {genocidealVoices.map((voice, index: number) => (
+                <div
+                  key={voice.id}
+                  style={{
+                    borderTopColor: "#dc2626", // red-600
+                  }}
+                >
+                  <GenocidealVoiceCard voice={voice} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="bg-white rounded-lg shadow-md border-t-4 p-8 text-center"
+              style={{ borderTopColor: "#dc2626" }}
+            >
+              <div className="text-lg font-semibold text-gray-900 mb-2">
+                Loading genocidal voices documentation...
+              </div>
+              <div className="text-gray-600">
+                Documenting statements of genocidal intent from Israeli officials.
+              </div>
+            </div>
+          )}
+
+          {/* Credit */}
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Quotes sourced from{" "}
+              <a
+                href="https://crimesbyisrael.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-700 font-medium underline"
+              >
+                CrimesByIsrael.com
+              </a>
+            </p>
           </div>
         </section>
 

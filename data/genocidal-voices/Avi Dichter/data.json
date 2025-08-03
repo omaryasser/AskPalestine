@@ -1,0 +1,28 @@
+{
+  "name": "Avi Dichter",
+  "title": "Israeli Agriculture Minister",
+  "quotes": [
+    {
+      "quote": "We are now rolling out the Gaza Nakba",
+      "context": "Reference to ethnic cleansing (Nakba refers to 1948 Palestinian expulsion)",
+      "sources": [
+        {
+          "name": "Human Rights Watch - Hopeless, Starving, and Besieged",
+          "link": "https://www.hrw.org/report/2024/11/14/hopeless-starving-and-besieged/israels-forced-displacement-palestinians-gaza",
+          "date": "14 November 2024"
+        }
+      ]
+    },
+    {
+      "quote": "Gaza Nakba 2023. That's how it'll end",
+      "context": "Confirmation of intent for ethnic cleansing",
+      "sources": [
+        {
+          "name": "Human Rights Watch - Hopeless, Starving, and Besieged",
+          "link": "https://www.hrw.org/report/2024/11/14/hopeless-starving-and-besieged/israels-forced-displacement-palestinians-gaza",
+          "date": "14 November 2024"
+        }
+      ]
+    }
+  ]
+}

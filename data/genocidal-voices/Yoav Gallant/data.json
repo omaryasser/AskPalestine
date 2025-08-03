@@ -1,0 +1,39 @@
+{
+  "name": "Yoav Gallant",
+  "title": "Israeli Defense Minister",
+  "quotes": [
+    {
+      "quote": "Gaza will never go back to what it was",
+      "context": "Threat that Gaza will never recover, with all restraints released",
+      "sources": [
+        {
+          "name": "The Times of Israel - Gallant: Israel moving to full offense, Gaza will never go back to what it once was",
+          "link": "https://www.timesofisrael.com/gallant-israel-moving-to-full-offense-gaza-will-never-go-back-to-what-it-once-was/",
+          "date": "10 October 2023"
+        }
+      ]
+    },
+    {
+      "quote": "I have ordered a complete siege on the Gaza Strip. There will be no electricity, no food, no fuel, everything is closed",
+      "context": "Complete siege declaration endangering entire civilian population",
+      "sources": [
+        {
+          "name": "The Times of Israel - Defense minister announces 'complete siege' of Gaza: No power, food or fuel",
+          "link": "https://www.timesofisrael.com/defense-minister-announces-complete-siege-of-gaza-no-power-food-or-fuel/",
+          "date": "9 October 2023"
+        }
+      ]
+    },
+    {
+      "quote": "We are fighting human animals and we are acting accordingly",
+      "context": "Dehumanizing language justifying extreme measures",
+      "sources": [
+        {
+          "name": "The Times of Israel - Defense minister announces 'complete siege' of Gaza: No power, food or fuel",
+          "link": "https://www.timesofisrael.com/defense-minister-announces-complete-siege-of-gaza-no-power-food-or-fuel/",
+          "date": "9 October 2023"
+        }
+      ]
+    }
+  ]
+}
