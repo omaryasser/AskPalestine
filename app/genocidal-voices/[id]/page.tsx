@@ -7,9 +7,9 @@ import {
 import { notFound } from "next/navigation";
 
 interface GenocidealVoiceDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 export default async function GenocidealVoiceDetailPage({
   params,
 }: GenocidealVoiceDetailPageProps) {
-  const voice = await getGenocidealVoice(decodeURIComponent(params.id));
+  const { id } = await params;
+  const voice = await getGenocidealVoice(decodeURIComponent(id));
 
   if (!voice) {
     notFound();
