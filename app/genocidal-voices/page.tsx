@@ -14,7 +14,7 @@ export default async function GenocidealVoicesPage() {
     <div className="min-h-screen bg-gray-50">
       <PageHeader
         title="Zionist Genocidal Voices"
-        subtitle="Documented statements of genocidal intent from Israeli officials, providing evidence of systematic dehumanization and calls for destruction of Palestinian people."
+        subtitle="Documented statements of genocidal intent from Israelis, providing evidence of systematic dehumanization and calls for destruction of Palestinian people."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

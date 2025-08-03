@@ -158,7 +158,7 @@ export default async function Home() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
               title={`Zionist Genocidal Voices (${counts.totalGenocidealVoices})`}
-              subtitle="Documented genocidal statements from Israeli officials"
+              subtitle="Documented genocidal statements from Israelis"
             />
             <div className="sm:ml-auto">
               <PalestineButton href="/genocidal-voices">View All →</PalestineButton>
@@ -187,7 +187,7 @@ export default async function Home() {
                 Loading genocidal voices documentation...
               </div>
               <div className="text-gray-600">
-                Documenting statements of genocidal intent from Israeli officials.
+                Documenting statements of genocidal intent from Israelis.
               </div>
             </div>
           )}
