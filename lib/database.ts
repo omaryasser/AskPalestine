@@ -69,6 +69,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
     database.prepare("DELETE FROM questions").run();
     database.prepare("DELETE FROM voices").run();
     database.prepare("DELETE FROM genocidal_voices").run();
+    database.prepare("DELETE FROM gems").run();
 
     // FIRST: Load voices (they must exist before answers can reference them)
     const proPalestiniansPath = path.join(dataPath, "voices");
@@ -175,6 +176,68 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
           );
         } catch (error) {
           console.warn(`Error processing genocidal voice ${voiceDir}:`, error);
+        }
+      }
+    }
+
+    // Load gems
+    const gemsPath = path.join(dataPath, "gems");
+    if (fs.existsSync(gemsPath)) {
+      const gemDirs = fs.readdirSync(gemsPath);
+      console.log(`Found ${gemDirs.length} gems to process`);
+
+      for (const gemDir of gemDirs) {
+        const gemPath = path.join(gemsPath, gemDir);
+        if (!fs.statSync(gemPath).isDirectory()) continue;
+
+        const dataJsonPath = path.join(gemPath, "data.json");
+        if (!fs.existsSync(dataJsonPath)) continue;
+
+        try {
+          const data = JSON.parse(fs.readFileSync(dataJsonPath, "utf-8"));
+
+          // Check for photo and copy to public folder
+          const photoExtensions = [".png", ".jpg", ".jpeg", ".webp"];
+          let photo = null;
+          for (const ext of photoExtensions) {
+            const photoPath = path.join(gemPath, `photo${ext}`);
+            if (fs.existsSync(photoPath)) {
+              // Create public/photos directory if it doesn't exist
+              const publicPhotosDir = path.join(
+                process.cwd(),
+                "public",
+                "photos",
+              );
+              if (!fs.existsSync(publicPhotosDir)) {
+                fs.mkdirSync(publicPhotosDir, { recursive: true });
+              }
+
+              // Copy photo to public folder with ID-based name
+              const publicPhotoPath = path.join(
+                publicPhotosDir,
+                `gem-${gemDir}${ext}`,
+              );
+              fs.copyFileSync(photoPath, publicPhotoPath);
+
+              // Store the correct web path for the photo
+              photo = `/photos/gem-${gemDir}${ext}`;
+              break;
+            }
+          }
+
+          const insertGem = database.prepare(
+            "INSERT OR REPLACE INTO gems (id, type, name, description, photo, sources) VALUES (?, ?, ?, ?, ?, ?)",
+          );
+          insertGem.run(
+            gemDir,
+            data.type,
+            data.name,
+            data.description,
+            photo,
+            JSON.stringify(data.sources || []),
+          );
+        } catch (error) {
+          console.warn(`Error processing gem ${gemDir}:`, error);
         }
       }
     }
@@ -339,6 +402,15 @@ export interface GenocidealVoice {
   }[];
 }
 
+export interface Gem {
+  id: string;
+  type: string;
+  name: string;
+  description: string;
+  photo?: string;
+  sources: { name: string; link: string }[];
+}
+
 export interface PaginatedQuestions {
   questions: Question[];
   totalCount: number;
@@ -408,6 +480,15 @@ export function initDatabase(): Database.Database {
       name TEXT NOT NULL,
       title TEXT NOT NULL,
       quotes TEXT NOT NULL -- JSON array of quotes with context and sources
+    );
+
+    CREATE TABLE IF NOT EXISTS gems (
+      id TEXT PRIMARY KEY,
+      type TEXT NOT NULL, -- e.g., "Website", "Community", "Book", "App"
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      photo TEXT,
+      sources TEXT NOT NULL -- JSON array of sources with name and link
     );
 
     CREATE TABLE IF NOT EXISTS questions (
@@ -846,6 +927,10 @@ export async function getTotalCounts() {
     totalUnansweredQuestionsStmt.get() as { count: number }
   ).count;
 
+  // Get total gems
+  const totalGemsStmt = database.prepare("SELECT COUNT(*) as count FROM gems");
+  const totalGems = (totalGemsStmt.get() as { count: number }).count;
+
   return {
     totalQuestions,
     totalProPalestinians,
@@ -853,6 +938,7 @@ export async function getTotalCounts() {
     questionsWithAnswers,
     totalGenocidealVoices,
     totalUnansweredQuestions,
+    totalGems,
   };
 }
 
@@ -1090,5 +1176,53 @@ export async function getRandomGenocidealVoices(
   return voices.map((voice: any) => ({
     ...voice,
     quotes: JSON.parse(voice.quotes || "[]"),
+  }));
+}
+
+export async function getAllGems(): Promise<Gem[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM gems ORDER BY name");
+  const gems = stmt.all() as any[];
+
+  return gems.map((gem: any) => ({
+    ...gem,
+    sources: JSON.parse(gem.sources || "[]"),
+  }));
+}
+
+export async function getGem(id: string): Promise<Gem | null> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM gems WHERE id = ?");
+  const gem = stmt.get(id) as any;
+
+  if (!gem) return null;
+
+  return {
+    ...gem,
+    sources: JSON.parse(gem.sources || "[]"),
+  };
+}
+
+export async function getRandomGems(limit: number = 6): Promise<Gem[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare("SELECT * FROM gems ORDER BY RANDOM() LIMIT ?");
+  const gems = stmt.all(limit) as any[];
+
+  return gems.map((gem: any) => ({
+    ...gem,
+    sources: JSON.parse(gem.sources || "[]"),
+  }));
+}
+
+export async function getGemsByType(type: string): Promise<Gem[]> {
+  const database = await getDatabase();
+  const stmt = database.prepare(
+    "SELECT * FROM gems WHERE type = ? ORDER BY name",
+  );
+  const gems = stmt.all(type) as any[];
+
+  return gems.map((gem: any) => ({
+    ...gem,
+    sources: JSON.parse(gem.sources || "[]"),
   }));
 }

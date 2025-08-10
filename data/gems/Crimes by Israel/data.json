@@ -1,0 +1,11 @@
+{
+  "type": "Website",
+  "name": "Crimes by Israel",
+  "description": "Initial work by Yanis Varoufakis (former Finance Minister of Greece) covers 7-14 October 2023. This document is a revision and extension of his work. It is not an exhaustive list.",
+  "sources": [
+    {
+      "name": "Crimes by Israel Website",
+      "link": "https://crimesbyisrael.com/"
+    }
+  ]
+}

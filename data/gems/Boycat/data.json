@@ -1,0 +1,11 @@
+{
+  "type": "App",
+  "name": "Boycat",
+  "description": "Application to search brands, scan products, and make ethical shopping choices with confidence. Helps consumers avoid supporting companies that are complicit in harmful practices.",
+  "sources": [
+    {
+      "name": "Boycat Website",
+      "link": "https://www.boycat.io/"
+    }
+  ]
+}

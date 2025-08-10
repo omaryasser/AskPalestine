@@ -2,6 +2,7 @@ import QuestionCard from "../components/QuestionCard";
 import QuestionWithAnswersCard from "../components/QuestionWithAnswersCard";
 import ProPalestinianCard from "../components/ProPalestinianCard";
 import GenocidealVoiceCard from "../components/GenocidealVoiceCard";
+import GemCard from "../components/GemCard";
 import PalestineButton from "../components/PalestineButton";
 import SearchForm from "../components/SearchForm";
 import TabbedQuestionsSection from "../components/TabbedQuestionsSection";
@@ -13,12 +14,14 @@ import {
 import {
   Question,
   ProPalestinian,
+  Gem,
   getTotalCounts,
   getQuestionsWithMostAnswers,
   getLatestAnsweredQuestions,
   getLatestUnansweredQuestions,
   getAllProPalestinians,
   getRandomGenocidealVoices,
+  getRandomGems,
 } from "../lib/database";
 import Link from "next/link";
 
@@ -41,6 +44,9 @@ async function getHomePageData() {
   // Get random genocidal voices
   const genocidealVoices = await getRandomGenocidealVoices(6);
 
+  // Get random gems
+  const gems = await getRandomGems(6);
+
   return {
     counts,
     questionsWithMostAnswers,
@@ -48,6 +54,7 @@ async function getHomePageData() {
     latestUnansweredQuestions,
     allProPalestinians,
     genocidealVoices,
+    gems,
   };
 }
 
@@ -59,6 +66,7 @@ export default async function Home() {
     latestUnansweredQuestions,
     allProPalestinians,
     genocidealVoices,
+    gems,
   } = await getHomePageData();
 
   return (
@@ -154,6 +162,17 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* Tabbed Questions Section */}
+        <TabbedQuestionsSection
+          latestAnsweredQuestions={latestAnsweredQuestions}
+          mostAnsweredQuestions={questionsWithMostAnswers}
+          latestUnansweredQuestions={latestUnansweredQuestions}
+          counts={{
+            questionsWithAnswers: counts.questionsWithAnswers,
+            totalUnansweredQuestions: counts.totalUnansweredQuestions,
+          }}
+        />
+
         {/* Zionist Genocidal Voices Section */}
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
@@ -211,16 +230,40 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Tabbed Questions Section */}
-        <TabbedQuestionsSection
-          latestAnsweredQuestions={latestAnsweredQuestions}
-          mostAnsweredQuestions={questionsWithMostAnswers}
-          latestUnansweredQuestions={latestUnansweredQuestions}
-          counts={{
-            questionsWithAnswers: counts.questionsWithAnswers,
-            totalUnansweredQuestions: counts.totalUnansweredQuestions,
-          }}
-        />
+        {/* Gems Section */}
+        <section className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <SectionHeader
+              title={`Gems (${counts.totalGems})`}
+              subtitle="Essential resources for understanding Palestine"
+            />
+            <div className="sm:ml-auto">
+              <PalestineButton href="/gems">View All →</PalestineButton>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gems.map((gem: Gem, index: number) => (
+              <div key={gem.id} className="h-full">
+                <GemCard gem={gem} />
+              </div>
+            ))}
+          </div>
+
+          {gems.length === 0 && (
+            <div
+              className="bg-white rounded-lg shadow-md border-t-4 p-8 text-center"
+              style={{ borderTopColor: "#006234" }}
+            >
+              <div className="text-lg font-semibold text-gray-900 mb-2">
+                No gems available yet
+              </div>
+              <div className="text-gray-600">
+                We're working on adding more essential resources.
+              </div>
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
