@@ -31,9 +31,7 @@ export default function QuestionWithAnswersCard({
   const questionSlug = encodeURIComponent(question.id);
 
   // Parse question forms array
-  const questionForms = question.question_forms || [
-    question.question,
-  ];
+  const questionForms = question.question_forms || [question.question];
   const alternativeQuestions = questionForms.slice(1); // Get all except the first one
 
   return (

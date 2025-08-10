@@ -163,7 +163,8 @@ export default async function ProPalestinianPage({ params }: PageProps) {
                         authorId: answer.authorId,
                         authorName: person.name,
                         authorPhoto: person.photo,
-                        authorProfessionalIdentity: person.professional_identity,
+                        authorProfessionalIdentity:
+                          person.professional_identity,
                         content: answer.content,
                         source: answer.source,
                         source_type: answer.source_type,

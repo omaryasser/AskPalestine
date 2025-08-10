@@ -35,7 +35,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
       const parts = dateString.split("-");
       if (parts.length === 3) {
         let year, month, day;
-        
+
         // Check if it's YYYY-MM-DD format (year will be 4 digits and > 1000)
         if (parts[0].length === 4 && parseInt(parts[0]) > 1000) {
           [year, month, day] = parts;
@@ -43,7 +43,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
           // Assume DD-MM-YYYY format
           [day, month, year] = parts;
         }
-        
+
         const date = new Date(
           parseInt(year),
           parseInt(month) - 1,
@@ -107,7 +107,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
           <Link
-            href={`/voices/${encodeURIComponent(answer.authorName || '')}`}
+            href={`/voices/${encodeURIComponent(answer.authorName || "")}`}
             className="cursor-pointer"
           >
             {answer.authorPhoto ? (
@@ -119,7 +119,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
             ) : (
               <div className="h-10 w-10 bg-palestine-green rounded-full flex items-center justify-center hover:bg-palestine-green-dark transition-colors">
                 <span className="text-white font-semibold text-sm">
-                  {(answer.authorName || answer.authorId || 'Anonymous')
+                  {(answer.authorName || answer.authorId || "Anonymous")
                     .split(" ")
                     .map((n: string) => n[0])
                     .join("")
@@ -130,21 +130,20 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
           </Link>
           <div>
             <Link
-              href={`/voices/${encodeURIComponent(answer.authorName || '')}`}
+              href={`/voices/${encodeURIComponent(answer.authorName || "")}`}
               className="font-semibold text-gray-900 hover:text-palestine-green transition-colors cursor-pointer"
             >
               {answer.authorName || answer.authorId}
             </Link>
             <Link
-              href={`/voices/${encodeURIComponent(answer.authorName || '')}`}
+              href={`/voices/${encodeURIComponent(answer.authorName || "")}`}
               className="text-sm text-gray-500 hover:text-palestine-green transition-colors cursor-pointer block"
             >
               {answer.authorProfessionalIdentity || "Palestinian Voice"}
             </Link>
             {answer.created_at && (
               <p className="text-xs text-gray-400">
-                Added on{" "}
-                {formatDate(answer.created_at)}
+                Added on {formatDate(answer.created_at)}
               </p>
             )}
           </div>
@@ -202,64 +201,62 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
         <ReactMarkdown>{answer.content}</ReactMarkdown>
       </div>
 
-      {answer.source_type === "YOUTUBE" &&
-        answer.source && (
-          <div className="mt-4">
-            <div className="aspect-w-16 aspect-h-9">
-              <iframe
-                src={answer.source}
-                title="YouTube video"
-                className="w-full h-64 rounded-lg"
-                allowFullScreen
-              />
-            </div>
+      {answer.source_type === "YOUTUBE" && answer.source && (
+        <div className="mt-4">
+          <div className="aspect-w-16 aspect-h-9">
+            <iframe
+              src={answer.source}
+              title="YouTube video"
+              className="w-full h-64 rounded-lg"
+              allowFullScreen
+            />
           </div>
-        )}
+        </div>
+      )}
 
-      {answer.source_type === "WEB_ARTICLE" &&
-        answer.source && (
-          <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <svg
-                className="h-5 w-5 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                />
-              </svg>
-              <span className="text-sm font-medium text-gray-700">Source</span>
-            </div>
-            <a
-              href={answer.source}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-palestine-green hover:text-palestine-green-dark transition-colors group"
+      {answer.source_type === "WEB_ARTICLE" && answer.source && (
+        <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+          <div className="flex items-center space-x-2 mb-2">
+            <svg
+              className="h-5 w-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <span className="font-medium">
-                {answer.source_name || "Web Article"}
-              </span>
-              <svg
-                className="h-4 w-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-            </a>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+              />
+            </svg>
+            <span className="text-sm font-medium text-gray-700">Source</span>
           </div>
-        )}
+          <a
+            href={answer.source}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 text-palestine-green hover:text-palestine-green-dark transition-colors group"
+          >
+            <span className="font-medium">
+              {answer.source_name || "Web Article"}
+            </span>
+            <svg
+              className="h-4 w-4 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
+        </div>
+      )}
 
       {showReportForm && (
         <div className="mt-4 p-5 bg-red-50 border border-red-200 rounded-lg">

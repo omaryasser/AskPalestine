@@ -149,19 +149,21 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
     const genocidealVoicesPath = path.join(dataPath, "genocidal-voices");
     if (fs.existsSync(genocidealVoicesPath)) {
       const genocidealVoiceDirs = fs.readdirSync(genocidealVoicesPath);
-      console.log(`Found ${genocidealVoiceDirs.length} genocidal voices to process`);
+      console.log(
+        `Found ${genocidealVoiceDirs.length} genocidal voices to process`,
+      );
 
       for (const voiceDir of genocidealVoiceDirs) {
         const voicePath = path.join(genocidealVoicesPath, voiceDir);
         if (!fs.statSync(voicePath).isDirectory()) continue;
 
         const dataPath = path.join(voicePath, "data.json");
-        
+
         if (!fs.existsSync(dataPath)) continue;
 
         try {
           const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
-          
+
           const insertGenocidealVoice = database.prepare(
             "INSERT OR REPLACE INTO genocidal_voices (id, name, title, quotes) VALUES (?, ?, ?, ?)",
           );
@@ -169,7 +171,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
             voiceDir,
             data.name,
             data.title,
-            JSON.stringify(data.quotes || [])
+            JSON.stringify(data.quotes || []),
           );
         } catch (error) {
           console.warn(`Error processing genocidal voice ${voiceDir}:`, error);
@@ -217,7 +219,7 @@ async function loadDataToDatabase(database: Database.Database): Promise<void> {
     // Convert DD-MM-YYYY to YYYY-MM-DD for proper date storage
     const convertDateFormat = (dateStr: string): string | null => {
       if (!dateStr) return null;
-      const parts = dateStr.split('-');
+      const parts = dateStr.split("-");
       if (parts.length === 3) {
         return `${parts[2]}-${parts[1]}-${parts[0]}`; // DD-MM-YYYY to YYYY-MM-DD
       }
@@ -557,7 +559,9 @@ export async function getQuestion(id: string): Promise<Question | null> {
 
   return {
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   };
 }
 
@@ -622,7 +626,9 @@ export async function getAllQuestions(): Promise<Question[]> {
 
   return questions.map((question: any) => ({
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   }));
 }
 
@@ -638,7 +644,9 @@ export async function getQuestionsWithAnswers(): Promise<Question[]> {
 
   return questions.map((question: any) => ({
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   }));
 }
 
@@ -729,7 +737,9 @@ export async function getQuestionsWithAnswersPaginated(
 
       return {
         ...question,
-        question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+        question_forms: question.question_forms
+          ? JSON.parse(question.question_forms)
+          : [],
         answerCount: question.answerCount,
         authors: authors,
       };
@@ -773,7 +783,9 @@ export async function getQuestionsWithoutAnswersPaginated(
   return {
     questions: questions.map((question: any) => ({
       ...question,
-      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+      question_forms: question.question_forms
+        ? JSON.parse(question.question_forms)
+        : [],
     })),
     totalCount,
     hasMore: page < totalPages,
@@ -823,12 +835,24 @@ export async function getTotalCounts() {
     totalGenocidealVoicesStmt.get() as { count: number }
   ).count;
 
+  // Get unanswered questions count
+  const totalUnansweredQuestionsStmt = database.prepare(`
+    SELECT COUNT(*) as count 
+    FROM questions q 
+    LEFT JOIN answers a ON q.id = a.question_id 
+    WHERE a.question_id IS NULL
+  `);
+  const totalUnansweredQuestions = (
+    totalUnansweredQuestionsStmt.get() as { count: number }
+  ).count;
+
   return {
     totalQuestions,
     totalProPalestinians,
     totalAnswers,
     questionsWithAnswers,
     totalGenocidealVoices,
+    totalUnansweredQuestions,
   };
 }
 
@@ -845,7 +869,9 @@ export async function getRandomQuestions(
 
   return questions.map((question: any) => ({
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   }));
 }
 
@@ -907,7 +933,9 @@ export async function getQuestionsWithMostAnswers(limit: number = 6): Promise<
 
     return {
       ...question,
-      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+      question_forms: question.question_forms
+        ? JSON.parse(question.question_forms)
+        : [],
       answerCount: question.answerCount,
       authors: authors,
     };
@@ -971,7 +999,9 @@ export async function getLatestAnsweredQuestions(limit: number = 6): Promise<
 
     return {
       ...question,
-      question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+      question_forms: question.question_forms
+        ? JSON.parse(question.question_forms)
+        : [],
       answerCount: question.answerCount,
       authors: authors,
     };
@@ -994,7 +1024,9 @@ export async function getUnansweredQuestions(
 
   return questions.map((question: any) => ({
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   }));
 }
 
@@ -1014,7 +1046,9 @@ export async function getLatestUnansweredQuestions(
 
   return questions.map((question: any) => ({
     ...question,
-    question_forms: question.question_forms ? JSON.parse(question.question_forms) : [],
+    question_forms: question.question_forms
+      ? JSON.parse(question.question_forms)
+      : [],
   }));
 }
 
@@ -1029,7 +1063,9 @@ export async function getAllGenocidealVoices(): Promise<GenocidealVoice[]> {
   }));
 }
 
-export async function getGenocidealVoice(id: string): Promise<GenocidealVoice | null> {
+export async function getGenocidealVoice(
+  id: string,
+): Promise<GenocidealVoice | null> {
   const database = await getDatabase();
   const stmt = database.prepare("SELECT * FROM genocidal_voices WHERE id = ?");
   const voice = stmt.get(id) as any;
@@ -1042,9 +1078,13 @@ export async function getGenocidealVoice(id: string): Promise<GenocidealVoice | 
   };
 }
 
-export async function getRandomGenocidealVoices(limit: number = 6): Promise<GenocidealVoice[]> {
+export async function getRandomGenocidealVoices(
+  limit: number = 6,
+): Promise<GenocidealVoice[]> {
   const database = await getDatabase();
-  const stmt = database.prepare("SELECT * FROM genocidal_voices ORDER BY RANDOM() LIMIT ?");
+  const stmt = database.prepare(
+    "SELECT * FROM genocidal_voices ORDER BY RANDOM() LIMIT ?",
+  );
   const voices = stmt.all(limit) as any[];
 
   return voices.map((voice: any) => ({

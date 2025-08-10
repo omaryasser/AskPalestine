@@ -184,6 +184,16 @@ export default function QuestionsPage() {
     loadData();
   }, [answeredPage, unansweredPage]);
 
+  // Handle hash navigation
+  useEffect(() => {
+    if (!loading && window.location.hash === "#unanswered") {
+      const unansweredSection = document.getElementById("unanswered");
+      if (unansweredSection) {
+        unansweredSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [loading]);
+
   const handleAnsweredPageChange = (page: number) => {
     setAnsweredPage(page);
     loadAnsweredQuestions(page);
@@ -275,7 +285,7 @@ export default function QuestionsPage() {
 
         {/* Unanswered Questions */}
         {unansweredQuestions && unansweredQuestions.questions.length > 0 && (
-          <section>
+          <section id="unanswered">
             <SectionHeader
               title={`Unanswered Questions (${unansweredQuestions.totalCount})`}
               subtitle="Help us find expert answers for these questions"

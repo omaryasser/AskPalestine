@@ -4,6 +4,7 @@ import ProPalestinianCard from "../components/ProPalestinianCard";
 import GenocidealVoiceCard from "../components/GenocidealVoiceCard";
 import PalestineButton from "../components/PalestineButton";
 import SearchForm from "../components/SearchForm";
+import TabbedQuestionsSection from "../components/TabbedQuestionsSection";
 import {
   PageHeader,
   PalestineFlagStats,
@@ -161,7 +162,9 @@ export default async function Home() {
               subtitle="Documented genocidal statements from Israelis"
             />
             <div className="sm:ml-auto">
-              <PalestineButton href="/genocidal-voices">View All →</PalestineButton>
+              <PalestineButton href="/genocidal-voices">
+                View All →
+              </PalestineButton>
             </div>
           </div>
 
@@ -208,100 +211,16 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Most Answered Questions */}
-        <section className="mb-16">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-            <SectionHeader
-              title={`Most Answered Questions (${counts.questionsWithAnswers})`}
-              subtitle="Popular questions with comprehensive expert responses"
-            />
-            <div className="sm:ml-auto">
-              <PalestineButton href="/questions">Browse All →</PalestineButton>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {questionsWithMostAnswers.map((question: any, index: number) => (
-              <div
-                key={question.id}
-                style={{
-                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
-                }}
-              >
-                <QuestionWithAnswersCard question={question} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Latest Answered Questions */}
-        <section className="mb-16">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-            <SectionHeader
-              title={`Latest Answered Questions`}
-              subtitle="Recently answered questions from Palestinian voices"
-            />
-            <div className="sm:ml-auto">
-              <PalestineButton href="/questions">Browse All →</PalestineButton>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestAnsweredQuestions.map((question: any, index: number) => (
-              <div
-                key={question.id}
-                style={{
-                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
-                }}
-              >
-                <QuestionWithAnswersCard question={question} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Latest Unanswered Questions */}
-        <section className="mb-16">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-            <SectionHeader
-              title={`Latest Unanswered Questions (${latestUnansweredQuestions.length})`}
-              subtitle="Recently asked questions seeking expert responses"
-            />
-            <div className="sm:ml-auto">
-              <PalestineButton href="/questions">
-                See All Questions →
-              </PalestineButton>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestUnansweredQuestions.map((question: Question, index: number) => (
-              <div
-                key={question.id}
-                className="border-t-4 h-full"
-                style={{
-                  borderTopColor: index % 2 === 0 ? "#000000" : "#006234",
-                }}
-              >
-                <QuestionCard question={question} />
-              </div>
-            ))}
-          </div>
-
-          {latestUnansweredQuestions.length === 0 && (
-            <div
-              className="bg-white rounded-lg shadow-md border-t-4 p-8 text-center"
-              style={{ borderTopColor: "#006234" }}
-            >
-              <div className="text-lg font-semibold text-gray-900 mb-2">
-                All questions have been answered!
-              </div>
-              <div className="text-gray-600">
-                Every question in our database has at least one expert response.
-              </div>
-            </div>
-          )}
-        </section>
+        {/* Tabbed Questions Section */}
+        <TabbedQuestionsSection
+          latestAnsweredQuestions={latestAnsweredQuestions}
+          mostAnsweredQuestions={questionsWithMostAnswers}
+          latestUnansweredQuestions={latestUnansweredQuestions}
+          counts={{
+            questionsWithAnswers: counts.questionsWithAnswers,
+            totalUnansweredQuestions: counts.totalUnansweredQuestions,
+          }}
+        />
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
-import { getGenocidealVoice, getAllGenocidealVoices } from "../../../lib/database";
-import PalestineButton from "../../../components/PalestineButton";
 import {
-  PageHeader,
-  SectionHeader,
-} from "../../../components/PalestineDesign";
+  getGenocidealVoice,
+  getAllGenocidealVoices,
+} from "../../../lib/database";
+import PalestineButton from "../../../components/PalestineButton";
+import { PageHeader, SectionHeader } from "../../../components/PalestineDesign";
 import { notFound } from "next/navigation";
 
 interface GenocidealVoiceDetailPageProps {
@@ -31,10 +31,7 @@ export default async function GenocidealVoiceDetailPage({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <PageHeader
-        title={voice.name}
-        subtitle={voice.title}
-      />
+      <PageHeader title={voice.name} subtitle={voice.title} />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Navigation */}
@@ -65,7 +62,9 @@ export default async function GenocidealVoiceDetailPage({
           <div className="p-8">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{voice.name}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {voice.name}
+              </h1>
               <p className="text-xl text-red-600 font-medium">{voice.title}</p>
             </div>
 
@@ -77,25 +76,39 @@ export default async function GenocidealVoiceDetailPage({
               />
               <div className="space-y-6 mt-6">
                 {voice.quotes.map((quoteData, index) => (
-                  <div key={index} className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                  <div
+                    key={index}
+                    className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg"
+                  >
                     {quoteData.context && (
-                      <h3 className="text-lg font-bold text-red-800 mb-3">{quoteData.context}</h3>
+                      <h3 className="text-lg font-bold text-red-800 mb-3">
+                        {quoteData.context}
+                      </h3>
                     )}
                     <blockquote className="text-xl italic text-red-800 font-medium border-l-4 border-red-300 pl-6 my-4">
                       "{quoteData.quote}"
                     </blockquote>
-                    
+
                     {/* Sources for this specific quote */}
                     {quoteData.sources && quoteData.sources.length > 0 && (
                       <div className="mt-4 pt-4 border-t border-red-200">
-                        <h4 className="text-sm font-medium text-red-700 mb-2">Sources:</h4>
+                        <h4 className="text-sm font-medium text-red-700 mb-2">
+                          Sources:
+                        </h4>
                         <div className="space-y-2">
                           {quoteData.sources.map((source, sourceIndex) => (
-                            <div key={sourceIndex} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <div
+                              key={sourceIndex}
+                              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+                            >
                               <div className="flex-1">
-                                <p className="text-sm text-gray-700">{source.name}</p>
+                                <p className="text-sm text-gray-700">
+                                  {source.name}
+                                </p>
                                 {source.date && (
-                                  <p className="text-xs text-gray-500">{source.date}</p>
+                                  <p className="text-xs text-gray-500">
+                                    {source.date}
+                                  </p>
                                 )}
                               </div>
                               <a

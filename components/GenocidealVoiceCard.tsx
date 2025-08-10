@@ -5,10 +5,13 @@ interface GenocidealVoiceCardProps {
   voice: GenocidealVoice;
 }
 
-export default function GenocidealVoiceCard({ voice }: GenocidealVoiceCardProps) {
+export default function GenocidealVoiceCard({
+  voice,
+}: GenocidealVoiceCardProps) {
   // Get the first quote for preview
-  const firstQuote = voice.quotes && voice.quotes.length > 0 ? voice.quotes[0] : null;
-  
+  const firstQuote =
+    voice.quotes && voice.quotes.length > 0 ? voice.quotes[0] : null;
+
   const getQuotePreview = (quote: string): string => {
     if (quote.length > 150) {
       return quote.substring(0, 150) + "...";
@@ -16,8 +19,12 @@ export default function GenocidealVoiceCard({ voice }: GenocidealVoiceCardProps)
     return quote;
   };
 
-  const quotePreview = firstQuote ? getQuotePreview(firstQuote.quote) : "No quotes available";
-  const totalSources = voice.quotes?.reduce((total, q) => total + (q.sources?.length || 0), 0) || 0;
+  const quotePreview = firstQuote
+    ? getQuotePreview(firstQuote.quote)
+    : "No quotes available";
+  const totalSources =
+    voice.quotes?.reduce((total, q) => total + (q.sources?.length || 0), 0) ||
+    0;
 
   return (
     <Link href={`/genocidal-voices/${encodeURIComponent(voice.id)}`}>
@@ -25,7 +32,9 @@ export default function GenocidealVoiceCard({ voice }: GenocidealVoiceCardProps)
         <div className="p-6">
           {/* Header */}
           <div className="mb-4">
-            <h3 className="text-lg font-bold text-gray-900 mb-1">{voice.name}</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-1">
+              {voice.name}
+            </h3>
             <p className="text-sm text-red-600 font-medium">{voice.title}</p>
           </div>
 
