@@ -82,7 +82,7 @@ export default async function Home() {
           <SearchForm />
         </div>
 
-        {/* Stats Section */}
+        {/* Tabbed Questions Section with Flag Stats */}
         <div className="mb-16">
           {/* Main Hero Stat */}
           <div className="mb-8">
@@ -92,7 +92,18 @@ export default async function Home() {
               subtitle="Expert responses from Palestinian voices worldwide"
             />
           </div>
+
+          <TabbedQuestionsSection
+            latestAnsweredQuestions={latestAnsweredQuestions}
+            mostAnsweredQuestions={questionsWithMostAnswers}
+            latestUnansweredQuestions={latestUnansweredQuestions}
+            counts={{
+              questionsWithAnswers: counts.questionsWithAnswers,
+              totalUnansweredQuestions: counts.totalUnansweredQuestions,
+            }}
+          />
         </div>
+
         {/* Palestinian Voices Section */}
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
@@ -161,17 +172,6 @@ export default async function Home() {
               ))}
           </div>
         </section>
-
-        {/* Tabbed Questions Section */}
-        <TabbedQuestionsSection
-          latestAnsweredQuestions={latestAnsweredQuestions}
-          mostAnsweredQuestions={questionsWithMostAnswers}
-          latestUnansweredQuestions={latestUnansweredQuestions}
-          counts={{
-            questionsWithAnswers: counts.questionsWithAnswers,
-            totalUnansweredQuestions: counts.totalUnansweredQuestions,
-          }}
-        />
 
         {/* Zionist Genocidal Voices Section */}
         <section className="mb-16">
