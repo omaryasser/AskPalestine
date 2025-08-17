@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://askpalestine.info"),
   title: "AskPalestine - Truth through Knowledge",
   description:
     "An index of Palestine-related questions and answers by prominent pro-Palestinian figures. Get clarity and confidence to speak up for Palestinian rights.",
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     title: "AskPalestine - Truth through Knowledge",
     description:
       "An index of Palestine-related questions and answers by prominent pro-Palestinian figures.",
-    url: "https://askpalestine.com",
+    url: "https://askpalestine.info",
     siteName: "AskPalestine",
     images: [
       {

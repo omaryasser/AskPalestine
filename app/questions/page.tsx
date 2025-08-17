@@ -4,40 +4,6 @@ import UnansweredQuestions from "../../components/UnansweredQuestions";
 import PalestineButton from "../../components/PalestineButton";
 import { PageHeader } from "../../components/PalestineDesign";
 
-// Shared types
-interface Question {
-  id: string;
-  question: string;
-  question_forms?: string[];
-  created_at?: string;
-}
-
-interface QuestionWithAnswers extends Question {
-  answerCount: number;
-  authors: Array<{
-    id: string;
-    name: string;
-    photo?: string;
-    professional_identity?: string;
-  }>;
-}
-
-interface PaginatedAnsweredQuestions {
-  questions: QuestionWithAnswers[];
-  totalCount: number;
-  hasMore: boolean;
-  currentPage: number;
-  totalPages: number;
-}
-
-interface PaginatedQuestions {
-  questions: Question[];
-  totalCount: number;
-  hasMore: boolean;
-  currentPage: number;
-  totalPages: number;
-}
-
 export const metadata = {
   title: "Questions & Answers | AskPalestine",
   description:

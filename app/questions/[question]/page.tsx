@@ -27,9 +27,9 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: {
-  params: { question: string };
+  params: Promise<{ question: string }>;
 }): Promise<Metadata> {
-  const decodedQuestionId = decodeURIComponent(params.question);
+  const decodedQuestionId = decodeURIComponent((await params).question);
   const question = await getQuestion(decodedQuestionId);
   if (!question) {
     return {
@@ -49,6 +49,28 @@ export async function generateMetadata({
       "advocacy",
       ...(question.question_forms || []).map((q) => q),
     ],
+    openGraph: {
+      title: `${question.question} | AskPalestine`,
+      description: `Expert answers and perspectives on: ${question.question}. Find Palestinian voices and resources for clarity and advocacy.`,
+      url: `https://askpalestine.info/questions/${encodeURIComponent(question.id)}`,
+      siteName: "AskPalestine",
+      images: [
+        {
+          url: "/favicon.png",
+          width: 256,
+          height: 256,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${question.question} | AskPalestine`,
+      description: `Expert answers and perspectives on: ${question.question}. Find Palestinian voices and resources for clarity and advocacy.`,
+      images: ["/favicon.png"],
+      creator: "@askpalestine_qa",
+    },
   };
 }
 

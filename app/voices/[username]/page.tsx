@@ -6,7 +6,6 @@ import {
   getAnswersByAuthor,
 } from "../../../lib/database";
 import PalestineButton from "../../../components/PalestineButton";
-import ShareButton from "../../../components/ShareButton";
 import AnswerCard from "../../../components/AnswerCard";
 import {
   PageHeader,
@@ -28,29 +27,51 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }): Promise<Metadata> {
-  const person = await getProPalestinian(decodeURIComponent(params.username));
+  const { username } = await params;
+  const person = await getProPalestinian(decodeURIComponent(username));
   if (!person) {
     return {
       title: "Voice Not Found | AskPalestine",
       description:
-        "This pro-Palestinian voice could not be found. Browse other experts, activists, and journalists on AskPalestine.",
+        "This pro-Palestinian voice could not be found. Browse other voices and expert answers on AskPalestine.",
     };
   }
   return {
-    title: `${person.name} - Pro-Palestinian Voice | AskPalestine`,
-    description: `${person.name}: ${
-      person.professional_identity || "Palestinian expert"
-    }. Discover answers, perspectives, and biography.`,
+    title: `${person.name} | Pro-Palestinian Voice | AskPalestine`,
+    description: `Profile and expert answers from ${person.name}, a prominent pro-Palestinian voice. Explore more voices and perspectives on AskPalestine.`,
     keywords: [
-      "Palestinian voice",
+      "Palestine",
+      "voice",
+      "pro-Palestinian",
+      "answers",
       "expert",
-      "activist",
-      "journalist",
       person.name,
       ...(person.bio ? [person.bio] : []),
     ],
+    openGraph: {
+      title: `${person.name} | Pro-Palestinian Voice | AskPalestine`,
+      description: `Profile and expert answers from ${person.name}, a prominent pro-Palestinian voice. Explore more voices and perspectives on AskPalestine.`,
+      url: `https://askpalestine.info/voices/${encodeURIComponent(person.name)}`,
+      siteName: "AskPalestine",
+      images: [
+        {
+          url: "/favicon.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "en_US",
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${person.name} | Pro-Palestinian Voice | AskPalestine`,
+      description: `Profile and expert answers from ${person.name}, a prominent pro-Palestinian voice. Explore more voices and perspectives on AskPalestine.`,
+      images: ["/favicon.png"],
+      creator: "@askpalestine_qa",
+    },
   };
 }
 

@@ -216,7 +216,7 @@ export default async function Home() {
             <div className="sm:ml-auto">
               <PalestineButton
                 href="/genocidal-voices"
-                className="!text-red-600 !border-red-600 hover:!text-red-700 hover:!border-red-700"
+                className="!text-red-600 !border-red-600 hover:!bg-red-600 hover:!text-white hover:!border-red-600"
               >
                 View All →
               </PalestineButton>

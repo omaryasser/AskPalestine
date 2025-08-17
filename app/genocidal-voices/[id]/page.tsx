@@ -23,9 +23,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const voice = await getGenocidealVoice(decodeURIComponent(params.id));
+  const voice = await getGenocidealVoice(decodeURIComponent((await params).id));
   if (!voice) {
     return {
       title: "Genocidal Voice Not Found | AskPalestine",
@@ -44,13 +44,37 @@ export async function generateMetadata({
       voice.name,
       ...(voice.quotes || []).map((q) => q.quote),
     ],
+    openGraph: {
+      title: `${voice.name} - Genocidal Voice | AskPalestine`,
+      description: `Documented quotes and evidence of genocidal intent from ${voice.name}. Explore more voices and evidence on AskPalestine.`,
+      url: `https://askpalestine.info/genocidal-voices/${encodeURIComponent(
+        voice.id,
+      )}`,
+      siteName: "AskPalestine",
+      images: [
+        {
+          url: "/favicon.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "en_US",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${voice.name} - Genocidal Voice | AskPalestine`,
+      description: `Documented quotes and evidence of genocidal intent from ${voice.name}. Explore more voices and evidence on AskPalestine.`,
+      images: ["/favicon.png"],
+      creator: "@askpalestine_qa",
+    },
   };
 }
 
 export default async function GenocidealVoiceDetailPage({
   params,
 }: GenocidealVoiceDetailPageProps) {
-  const { id } = await params;
+  const id = (await params).id;
   const voice = await getGenocidealVoice(decodeURIComponent(id));
 
   if (!voice) {

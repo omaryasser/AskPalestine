@@ -97,7 +97,11 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
   };
 
   const copyAnswerLink = () => {
-    const url = `${window.location.href}#${answer.id}`;
+    const baseUrl =
+      window.location.origin +
+      window.location.pathname +
+      window.location.search;
+    const url = `${baseUrl}#${answer.id}`;
     navigator.clipboard.writeText(url);
     alert("Link copied to clipboard!");
   };

@@ -425,7 +425,17 @@ export function initDatabase(): Database.Database {
   if (existingDb) return existingDb;
 
   console.log("📂 Setting up database path...");
-  const dbPath = path.join(process.cwd(), "askpalestine.db");
+  const now = new Date();
+  const readableDate = now
+    .toISOString()
+    .replace(/[:.]/g, "-")
+    .replace("T", "_")
+    .replace("Z", "");
+  const ms = now.getMilliseconds();
+  const dbPath = path.join(
+    process.cwd(),
+    `askpalestine_${readableDate}_${ms}.db`,
+  );
 
   // Always delete existing database file if it exists
   if (fs.existsSync(dbPath)) {

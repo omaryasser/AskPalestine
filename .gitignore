@@ -42,7 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 askpalestine.db
-
+askpalestine_*.db
 cloud-run-service.yaml
 
 deploy.sh
