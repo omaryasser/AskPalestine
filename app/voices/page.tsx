@@ -13,7 +13,7 @@ export default async function VoicesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <PageHeader
-        title="Palestinian Voices"
+        title="Pro-Palestinian Voices"
         subtitle="Discover insights and perspectives from Palestinian experts, journalists, activists, and thought leaders who provide clarity on Palestinian rights and the ongoing struggle for justice."
       />
 

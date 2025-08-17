@@ -39,7 +39,7 @@ interface TabbedQuestionsSectionProps {
 
 const tabConfig = {
   "latest-answered": {
-    title: "Latest Answered Questions",
+    title: "Latest Added Questions",
     subtitle: "Recently answered questions from Palestinian voices",
   },
   "most-answered": {
@@ -99,8 +99,11 @@ export default function TabbedQuestionsSection({
     <section className="mb-16">
       {/* Tab Headers */}
       <div className="mb-8">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+        <div className="border-b border-gray-200 overflow-x-auto">
+          <nav
+            className="-mb-px flex space-x-8 flex-nowrap min-w-max"
+            aria-label="Tabs"
+          >
             {(Object.keys(tabConfig) as TabType[]).map((tab) => {
               const isActive = activeTab === tab;
               const count = getTabCount(tab);
@@ -126,7 +129,14 @@ export default function TabbedQuestionsSection({
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
         <SectionHeader
-          title={`${config.title} (${getTabCount(activeTab)})`}
+          title={
+            <span>
+              <span className="text-green-700 font-extrabold text-3xl mr-2">
+                {getTabCount(activeTab)}
+              </span>
+              {config.title}
+            </span>
+          }
           subtitle={config.subtitle}
         />
         <div className="sm:ml-auto">

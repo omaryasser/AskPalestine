@@ -26,8 +26,10 @@ import {
 import Link from "next/link";
 
 async function getHomePageData() {
+  console.log("🏠 Home page data loading started...");
   // Get actual counts from database
   const counts = await getTotalCounts();
+  console.log("📊 Counts retrieved:", counts);
 
   // Get questions with most answers
   const questionsWithMostAnswers = await getQuestionsWithMostAnswers(6);
@@ -73,7 +75,7 @@ export default async function Home() {
     <div className="min-h-screen bg-gray-50">
       <PageHeader
         title="AskPalestine"
-        subtitle="Truth through Palestinian Voices. Get clarity and confidence to speak up for Palestinian rights."
+        subtitle="Truth through Pro-Palestinian Voices. Get clarity and confidence to speak up for Palestinian rights."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -89,7 +91,7 @@ export default async function Home() {
             <PalestineFlagStats
               count={counts.totalAnswers}
               title="Total Answers"
-              subtitle="Expert responses from Palestinian voices worldwide"
+              subtitle="Expert responses from Pro-Palestinian voices worldwide"
             />
           </div>
 
@@ -108,7 +110,14 @@ export default async function Home() {
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
-              title={`Palestinian Voices (${counts.totalProPalestinians})`}
+              title={
+                <span>
+                  <span className="text-green-700 font-extrabold text-3xl mr-2">
+                    {counts.totalProPalestinians}
+                  </span>
+                  Pro-Palestinian Voices
+                </span>
+              }
               subtitle="Expert perspectives from around the world"
             />
             <div className="sm:ml-auto">
@@ -177,11 +186,21 @@ export default async function Home() {
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
-              title={`Zionist Genocidal Voices (${counts.totalGenocidealVoices})`}
+              title={
+                <span>
+                  <span className="text-red-600 font-extrabold text-3xl mr-2">
+                    {counts.totalGenocidealVoices}
+                  </span>
+                  Zionist Genocidal Voices
+                </span>
+              }
               subtitle="Documented genocidal statements from Israelis"
             />
             <div className="sm:ml-auto">
-              <PalestineButton href="/genocidal-voices">
+              <PalestineButton
+                href="/genocidal-voices"
+                className="!text-red-600 !border-red-600 hover:!text-red-700 hover:!border-red-700"
+              >
                 View All →
               </PalestineButton>
             </div>
@@ -234,7 +253,14 @@ export default async function Home() {
         <section className="mb-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
             <SectionHeader
-              title={`Gems (${counts.totalGems})`}
+              title={
+                <span>
+                  <span className="text-green-700 font-extrabold text-3xl mr-2">
+                    {counts.totalGems}
+                  </span>
+                  Gems
+                </span>
+              }
               subtitle="Essential resources for understanding Palestine"
             />
             <div className="sm:ml-auto">

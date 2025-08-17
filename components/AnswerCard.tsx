@@ -139,7 +139,7 @@ export default function AnswerCard({ answer, questionId }: AnswerCardProps) {
               href={`/voices/${encodeURIComponent(answer.authorName || "")}`}
               className="text-sm text-gray-500 hover:text-palestine-green transition-colors cursor-pointer block"
             >
-              {answer.authorProfessionalIdentity || "Palestinian Voice"}
+              {answer.authorProfessionalIdentity || "Pro-Palestinian Voice"}
             </Link>
             {answer.created_at && (
               <p className="text-xs text-gray-400">

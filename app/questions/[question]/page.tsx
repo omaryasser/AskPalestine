@@ -38,7 +38,7 @@ export default async function QuestionPage({ params }: PageProps) {
     <div className="min-h-screen bg-gray-50">
       <PageHeader
         title={question.question}
-        subtitle="Expert answers from Palestinian voices"
+        subtitle="Expert answers from Pro-Palestinian voices"
         showFlag={false}
       />
 
@@ -110,7 +110,7 @@ export default async function QuestionPage({ params }: PageProps) {
         <div>
           <SectionHeader
             title={`Answers (${answers.length})`}
-            subtitle="Expert perspectives from Palestinian voices"
+            subtitle="Expert perspectives from Pro-Palestinian voices"
           />
 
           {answers.length > 0 ? (

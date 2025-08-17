@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 interface PalestineFlagAccentProps {
   size?: "small" | "medium" | "large";
   className?: string;
@@ -116,16 +118,18 @@ export function PageHeader({
 }
 
 interface SectionHeaderProps {
-  title: string;
+  title: ReactNode;
   subtitle?: string;
 }
 
 export function SectionHeader({ title, subtitle }: SectionHeaderProps) {
   return (
-    <div className="text-center mb-8">
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">{title}</h2>
-      {subtitle && <p className="text-gray-600 mb-6">{subtitle}</p>}
-      <div className="flex justify-center items-center gap-2">
+    <div className="mb-8">
+      <h2 className="text-3xl font-bold text-gray-900 mb-4 text-left">
+        {title}
+      </h2>
+      {subtitle && <p className="text-gray-600 mb-6 text-left">{subtitle}</p>}
+      <div className="flex justify-start items-center gap-2">
         <div className="w-12 h-1" style={{ backgroundColor: "#000000" }}></div>
         <div className="w-12 h-1" style={{ backgroundColor: "#006234" }}></div>
         <div className="w-12 h-1" style={{ backgroundColor: "#000000" }}></div>

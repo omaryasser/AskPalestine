@@ -65,7 +65,7 @@ export default function ProPalestinianCard({
               {person.name}
             </h3>
             <p className="text-sm text-gray-500">
-              {person.professional_identity || "Palestinian Voice"}
+              {person.professional_identity || "Pro-Palestinian Voice"}
             </p>
           </div>
         </div>
