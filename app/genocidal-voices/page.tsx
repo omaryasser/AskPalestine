@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getAllGenocidealVoices } from "../../lib/database";
 import PalestineButton from "../../components/PalestineButton";
 import {
@@ -5,6 +6,20 @@ import {
   PalestineFlagStats,
   SectionHeader,
 } from "../../components/PalestineDesign";
+
+export const metadata: Metadata = {
+  title: "Zionist Genocidal Voices | AskPalestine",
+  description:
+    "Documented statements of genocidal intent from Israelis, providing evidence of systematic dehumanization and calls for destruction of Palestinian people.",
+  keywords: [
+    "genocidal voices",
+    "Israel",
+    "Palestine",
+    "quotes",
+    "dehumanization",
+    "evidence",
+  ],
+};
 
 export default async function GenocidealVoicesPage() {
   const genocidealVoices = await getAllGenocidealVoices();

@@ -1,5 +1,6 @@
 "use client";
 
+import { Metadata } from "next";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import SearchForm from "../../components/SearchForm";
@@ -124,6 +125,20 @@ function UnansweredQuestionCard({
     </Link>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Questions & Answers | AskPalestine",
+  description:
+    "Browse and explore questions about Palestine with expert answers from pro-Palestinian voices. Get informed and advocate for justice.",
+  keywords: [
+    "Palestine",
+    "questions",
+    "answers",
+    "expert",
+    "advocacy",
+    "justice",
+  ],
+};
 
 export default function QuestionsPage() {
   const [answeredQuestions, setAnsweredQuestions] =

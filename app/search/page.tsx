@@ -4,10 +4,25 @@ import SearchForm from "../../components/SearchForm";
 import PalestineButton from "../../components/PalestineButton";
 import { PageHeader, SectionHeader } from "../../components/PalestineDesign";
 import { searchQuestions } from "../../lib/database";
+import { Metadata } from "next";
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
 }
+
+export const metadata: Metadata = {
+  title: "Search Questions | AskPalestine",
+  description:
+    "Search for expert answers to questions about Palestine, history, rights, and advocacy. Find clarity from pro-Palestinian voices.",
+  keywords: [
+    "Palestine",
+    "search",
+    "questions",
+    "answers",
+    "rights",
+    "advocacy",
+  ],
+};
 
 async function SearchResults({ query }: { query: string }) {
   const results = await searchQuestions(query);
@@ -48,7 +63,9 @@ async function SearchResults({ query }: { query: string }) {
     <>
       <SectionHeader
         title={`Search Results for "${query}"`}
-        subtitle={`Found ${results.length} ${results.length === 1 ? "question" : "questions"}`}
+        subtitle={`Found ${results.length} ${
+          results.length === 1 ? "question" : "questions"
+        }`}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

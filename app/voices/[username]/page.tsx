@@ -16,12 +16,42 @@ import {
 import fs from "fs";
 import path from "path";
 import ReactMarkdown from "react-markdown";
+import { Metadata } from "next";
 
 // Force dynamic rendering to avoid database conflicts during build
 export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ username: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { username: string };
+}): Promise<Metadata> {
+  const person = await getProPalestinian(decodeURIComponent(params.username));
+  if (!person) {
+    return {
+      title: "Voice Not Found | AskPalestine",
+      description:
+        "This pro-Palestinian voice could not be found. Browse other experts, activists, and journalists on AskPalestine.",
+    };
+  }
+  return {
+    title: `${person.name} - Pro-Palestinian Voice | AskPalestine`,
+    description: `${person.name}: ${
+      person.professional_identity || "Palestinian expert"
+    }. Discover answers, perspectives, and biography.`,
+    keywords: [
+      "Palestinian voice",
+      "expert",
+      "activist",
+      "journalist",
+      person.name,
+      ...(person.bio ? [person.bio] : []),
+    ],
+  };
 }
 
 export default async function ProPalestinianPage({ params }: PageProps) {

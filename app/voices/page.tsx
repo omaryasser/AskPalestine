@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { ProPalestinian, getAllProPalestinians } from "../../lib/database";
 import ProPalestinianCard from "../../components/ProPalestinianCard";
 import PalestineButton from "../../components/PalestineButton";
@@ -6,6 +7,20 @@ import {
   PalestineFlagStats,
   SectionHeader,
 } from "../../components/PalestineDesign";
+
+export const metadata: Metadata = {
+  title: "Pro-Palestinian Voices | AskPalestine",
+  description:
+    "Discover insights and perspectives from Palestinian experts, journalists, activists, and thought leaders who provide clarity on Palestinian rights and the ongoing struggle for justice.",
+  keywords: [
+    "Palestinian voices",
+    "experts",
+    "activists",
+    "journalists",
+    "rights",
+    "justice",
+  ],
+};
 
 export default async function VoicesPage() {
   const proPalestinians = await getAllProPalestinians();

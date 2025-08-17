@@ -24,6 +24,7 @@ import {
   getRandomGems,
 } from "../lib/database";
 import Link from "next/link";
+import { Metadata } from "next";
 
 async function getHomePageData() {
   console.log("🏠 Home page data loading started...");
@@ -59,6 +60,22 @@ async function getHomePageData() {
     gems,
   };
 }
+
+export const metadata: Metadata = {
+  title: "AskPalestine - Truth through Pro-Palestinian Voices",
+  description:
+    "Get clarity and confidence to speak up for Palestinian rights. Explore expert answers, resources, and documented voices for Palestine.",
+  keywords: [
+    "Palestine",
+    "Pro-Palestinian",
+    "questions",
+    "answers",
+    "resources",
+    "voices",
+    "advocacy",
+    "human rights",
+  ],
+};
 
 export default async function Home() {
   const {

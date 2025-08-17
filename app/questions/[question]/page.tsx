@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AnswerCard from "../../../components/AnswerCard";
 import PalestineButton from "../../../components/PalestineButton";
@@ -21,6 +22,34 @@ export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ question: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { question: string };
+}): Promise<Metadata> {
+  const decodedQuestionId = decodeURIComponent(params.question);
+  const question = await getQuestion(decodedQuestionId);
+  if (!question) {
+    return {
+      title: "Question Not Found | AskPalestine",
+      description:
+        "This question could not be found. Browse other questions about Palestine and expert answers from Pro-Palestinian voices.",
+    };
+  }
+  return {
+    title: `${question.question} | AskPalestine`,
+    description: `Expert answers and perspectives on: ${question.question}. Find Palestinian voices and resources for clarity and advocacy.`,
+    keywords: [
+      "Palestine",
+      "question",
+      "answers",
+      "expert",
+      "advocacy",
+      ...(question.question_forms || []).map((q) => q),
+    ],
+  };
 }
 
 export default async function QuestionPage({ params }: PageProps) {

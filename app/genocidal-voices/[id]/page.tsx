@@ -5,6 +5,7 @@ import {
 import PalestineButton from "../../../components/PalestineButton";
 import { PageHeader, SectionHeader } from "../../../components/PalestineDesign";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 interface GenocidealVoiceDetailPageProps {
   params: Promise<{
@@ -17,6 +18,33 @@ export async function generateStaticParams() {
   return voices.map((voice) => ({
     id: voice.id,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const voice = await getGenocidealVoice(decodeURIComponent(params.id));
+  if (!voice) {
+    return {
+      title: "Genocidal Voice Not Found | AskPalestine",
+      description:
+        "This documented genocidal voice could not be found. Browse other evidence and quotes on AskPalestine.",
+    };
+  }
+  return {
+    title: `${voice.name} - Genocidal Voice | AskPalestine`,
+    description: `Documented quotes and evidence of genocidal intent from ${voice.name}. Explore more voices and evidence on AskPalestine.`,
+    keywords: [
+      "genocidal voice",
+      "Israel",
+      "Palestine",
+      "quotes",
+      voice.name,
+      ...(voice.quotes || []).map((q) => q.quote),
+    ],
+  };
 }
 
 export default async function GenocidealVoiceDetailPage({
